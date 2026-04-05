@@ -1,0 +1,2315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- БЕЗОПАСНОСТЬ: Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self';">
+    <!-- ЗАЩИТА ОТ КЛИКДЖЕКИНГА -->
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <!-- ОТКЛЮЧЕНИЕ MIME SNIFFING -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <!-- ВКЛЮЧЕНИЕ XSS ЗАЩИТЫ -->
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="description" content="kosmos - Магазин товаров оптом и в розницу">
+    <title>kosmos - Магазин</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #0d0d0d 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Фоновые звезды */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 60px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50px 50px, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 130px 80px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 90px 10px, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: twinkle 5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+}
+
+/* Шапка сайта */
+.header {
+    background: linear-gradient(90deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    color: #ffffff;
+    padding: 20px 0;
+    box-shadow: 0 0 20px rgba(83, 104, 120, 0.3), 0 2px 5px rgba(0,0,0,0.5);
+    border-bottom: 1px solid rgba(83, 104, 120, 0.5);
+    position: relative;
+    z-index: 10;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(83, 104, 120, 0.8);
+}
+
+.cart-button {
+    background-color: rgba(83, 104, 120, 0.2);
+    border: 2px solid #536878;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.cart-button:hover {
+    background-color: rgba(83, 104, 120, 0.4);
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.6);
+}
+
+.cart-count {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 5px;
+    color: #000000;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    font-weight: bold;
+}
+
+/* Контейнер */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+/* Боковое меню */
+.sidebar {
+    width: 200px;
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.9) 0%, rgba(13, 13, 13, 0.8) 100%);
+    padding: 20px;
+    border-radius: 5px;
+    height: fit-content;
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.2), 0 4px 15px rgba(0,0,0,0.5);
+    border: 1px solid rgba(83, 104, 120, 0.5);
+}
+
+.sidebar h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(83, 104, 120, 0.6);
+}
+
+.categories-list {
+    list-style: none;
+}
+
+.categories-list li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: rgba(83, 104, 120, 0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+    color: #ffffff;
+}
+
+.categories-list li:hover {
+    background-color: rgba(83, 104, 120, 0.25);
+    border-left-color: #536878;
+    box-shadow: 0 0 10px rgba(83, 104, 120, 0.4);
+}
+
+.categories-list li.active {
+    background-color: rgba(83, 104, 120, 0.4);
+    border-left-color: #536878;
+    color: #ffffff;
+    box-shadow: 0 0 10px rgba(83, 104, 120, 0.6);
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.page h2 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(83, 104, 120, 0.5);
+}
+
+/* Сетка категорий */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.category-card {
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.8) 0%, rgba(13, 13, 13, 0.7) 100%);
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.1);
+    border: 1px solid rgba(83, 104, 120, 0.3);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(83, 104, 120, 0.4), 0 5px 20px rgba(0,0,0,0.4);
+    border-color: rgba(83, 104, 120, 0.6);
+}
+
+.category-image {
+    width: 100%;
+    height: 200px;
+    background-color: rgba(83, 104, 120, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+}
+
+.category-info {
+    padding: 15px;
+    text-align: center;
+}
+
+.category-info h3 {
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.category-info p {
+    color: #b0b0b0;
+    font-size: 14px;
+}
+
+/* Заголовок категории */
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    background-color: rgba(83, 104, 120, 0.2);
+    border: 1px solid rgba(83, 104, 120, 0.4);
+    color: #ffffff;
+    padding: 10px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.back-button:hover {
+    background-color: rgba(83, 104, 120, 0.3);
+    box-shadow: 0 0 10px rgba(83, 104, 120, 0.5);
+}
+
+/* Сетка товаров */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.product-card {
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.8) 0%, rgba(13, 13, 13, 0.7) 100%);
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.1);
+    transition: all 0.3s;
+    border: 1px solid rgba(83, 104, 120, 0.3);
+}
+
+.product-card:hover {
+    box-shadow: 0 0 25px rgba(83, 104, 120, 0.3), 0 5px 20px rgba(0,0,0,0.4);
+    border-color: rgba(83, 104, 120, 0.6);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background-color: rgba(83, 104, 120, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 15px;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.product-description {
+    font-size: 13px;
+    color: #b0b0b0;
+    margin-bottom: 10px;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 0 8px rgba(83, 104, 120, 0.5);
+}
+
+.product-price-original {
+    text-decoration: line-through;
+    color: #808080;
+    font-size: 14px;
+}
+
+.product-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.quantity-input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid rgba(83, 104, 120, 0.3);
+    background-color: rgba(83, 104, 120, 0.05);
+    border-radius: 3px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.quantity-input:focus {
+    outline: 2px solid #536878;
+    outline-offset: 2px;
+    background-color: rgba(83, 104, 120, 0.1);
+}
+
+.add-to-cart-button {
+    flex: 1;
+    background-color: rgba(83, 104, 120, 0.2);
+    border: 1px solid #536878;
+    color: #ffffff;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.add-to-cart-button:hover {
+    background-color: rgba(83, 104, 120, 0.4);
+    box-shadow: 0 0 12px rgba(83, 104, 120, 0.6);
+}
+
+.add-to-cart-button:active {
+    transform: scale(0.98);
+}
+
+/* Боковая панель корзины */
+.cart-panel {
+    position: fixed;
+    right: -400px;
+    top: 0;
+    width: 400px;
+    height: 100vh;
+    background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+    box-shadow: -2px 0 20px rgba(83, 104, 120, 0.3), -5px 0 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s;
+    z-index: 1000;
+    border-left: 1px solid rgba(83, 104, 120, 0.3);
+}
+
+.cart-panel.open {
+    right: 0;
+}
+
+.cart-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(83, 104, 120, 0.3);
+    background: linear-gradient(90deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #ffffff;
+}
+
+.close-cart {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.cart-item {
+    background-color: rgba(83, 104, 120, 0.08);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    border-left: 4px solid #536878;
+}
+
+.cart-item-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.cart-item-price {
+    color: #b0b0b0;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.quantity-btn {
+    background-color: rgba(83, 104, 120, 0.15);
+    border: 1px solid rgba(83, 104, 120, 0.4);
+    color: #ffffff;
+    width: 30px;
+    height: 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.quantity-btn:hover {
+    background-color: rgba(83, 104, 120, 0.3);
+    box-shadow: 0 0 10px rgba(83, 104, 120, 0.4);
+}
+
+.cart-item-qty {
+    padding: 5px 10px;
+    background: rgba(83, 104, 120, 0.05);
+    border: 1px solid rgba(83, 104, 120, 0.3);
+    border-radius: 3px;
+    text-align: center;
+    min-width: 50px;
+    color: #ffffff;
+}
+
+.cart-item-total {
+    text-align: right;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.remove-btn {
+    margin-left: auto;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+}
+
+.remove-btn:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.empty-cart {
+    text-align: center;
+    padding: 30px 20px;
+    color: #808080;
+}
+
+.cart-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(83, 104, 120, 0.3);
+    background-color: rgba(26, 26, 26, 0.5);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+.checkout-button {
+    width: 100%;
+    background-color: rgba(83, 104, 120, 0.2);
+    border: 1px solid #536878;
+    color: #ffffff;
+    padding: 12px;
+    border-radius: 3px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.checkout-button:hover {
+    background-color: rgba(83, 104, 120, 0.4);
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.6);
+}
+
+.checkout-button:disabled {
+    background-color: #808080;
+    cursor: not-allowed;
+}
+
+/* ОФОРМЛЕНИЕ ЗАКАЗА */
+
+.checkout-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.checkout-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.checkout-form-section {
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.8) 0%, rgba(13, 13, 13, 0.7) 100%);
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.1);
+    border: 1px solid rgba(83, 104, 120, 0.3);
+}
+
+.checkout-form-section h3 {
+    margin-bottom: 20px;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(83, 104, 120, 0.5);
+    font-size: 18px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(83, 104, 120, 0.3);
+    background-color: rgba(83, 104, 120, 0.05);
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #ffffff;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #536878;
+    background-color: rgba(83, 104, 120, 0.1);
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.3);
+}
+
+.submit-button {
+    width: 100%;
+    background-color: rgba(83, 104, 120, 0.2);
+    border: 1px solid #536878;
+    color: #ffffff;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.submit-button:hover {
+    background-color: rgba(83, 104, 120, 0.4);
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.6);
+}
+
+.order-summary {
+    background: linear-gradient(180deg, rgba(26, 26, 26, 0.8) 0%, rgba(13, 13, 13, 0.7) 100%);
+    padding: 25px;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.1);
+    height: fit-content;
+    border: 1px solid rgba(83, 104, 120, 0.3);
+}
+
+.order-summary h3 {
+    margin-bottom: 15px;
+    color: #ffffff;
+}
+
+#orderSummaryItems {
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(83, 104, 120, 0.2);
+    padding-bottom: 15px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.summary-item-name {
+    color: #ffffff;
+}
+
+.summary-item-qty {
+    color: #b0b0b0;
+    margin: 0 10px;
+}
+
+.summary-item-price {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.order-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    color: #ffffff;
+    padding-top: 10px;
+}
+
+/* Модальное окно успешного заказа */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    animation: slideUp 0.3s ease-out;
+    box-shadow: 0 0 30px rgba(83, 104, 120, 0.3), 0 5px 30px rgba(0,0,0,0.5);
+    border: 1px solid rgba(83, 104, 120, 0.3);
+}
+
+.modal-content h2 {
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-shadow: 0 0 10px rgba(83, 104, 120, 0.6);
+}
+
+.modal-content p {
+    color: #b0b0b0;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.modal-btn-primary {
+    background-color: rgba(83, 104, 120, 0.3);
+    border: 1px solid #536878;
+    color: #ffffff;
+}
+
+.modal-btn-primary:hover {
+    background-color: rgba(83, 104, 120, 0.5);
+    box-shadow: 0 0 15px rgba(83, 104, 120, 0.6);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .categories-grid,
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cart-panel {
+        width: 100%;
+        right: -100%;
+    }
+
+    .checkout-container {
+        grid-template-columns: 1fr;
+    }
+
+    button, input, textarea {
+        min-height: 44px;
+        font-size: 16px;
+    }
+}
+
+/* Мобильная версия для очень маленьких экранов */
+@media (max-width: 480px) {
+    /* Шапка */
+    .header {
+        padding: 15px 0;
+    }
+
+    .header-content {
+        padding: 0 10px;
+    }
+
+    .logo {
+        font-size: 22px;
+        letter-spacing: 2px;
+    }
+
+    .cart-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+
+    /* Контейнер */
+    .container {
+        max-width: 100%;
+        padding: 10px;
+        margin: 0;
+        display: block !important;
+        gap: 10px;
+    }
+
+    /* Боковое меню - скрыть на мобильных */
+    .sidebar {
+        display: none;
+    }
+
+    /* Основной контент */
+    .main-content {
+        padding: 0;
+    }
+
+    /* Сетка категорий */
+    .categories-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0;
+        margin: 0;
+    }
+
+    .category-card {
+        min-height: auto;
+    }
+
+    .category-image {
+        height: 100px;
+    }
+
+    .category-info {
+        padding: 10px;
+    }
+
+    .category-info h3 {
+        font-size: 14px;
+    }
+
+    .category-info p {
+        font-size: 12px;
+    }
+
+    /* Сетка товаров */
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .product-card {
+        display: block;
+        gap: 10px;
+        min-height: auto;
+    }
+
+    .product-image {
+        width: 100%;
+        min-width: auto;
+        height: 120px !important;
+        object-fit: contain;
+        background-color: rgba(83, 104, 120, 0.1) !important;
+    }
+
+    .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain !important;
+    }
+
+    .product-info {
+        padding: 8px;
+        flex: 1;
+    }
+
+    .product-name {
+        font-size: 13px;
+        margin-bottom: 3px;
+        line-height: 1.2;
+    }
+
+    .product-description {
+        font-size: 11px;
+        margin-bottom: 4px;
+        max-height: 30px;
+        overflow: hidden;
+    }
+
+    .product-price {
+        font-size: 13px;
+        margin-bottom: 4px;
+    }
+
+    /* Скрыть инфо об опте на мобильной */
+    .product-info > div:nth-child(4) {
+        display: none;
+    }
+
+    .product-controls {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* Назад кнопка */
+    .category-header {
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .back-button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .category-header h2 {
+        width: 100%;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    /* Корзина */
+    .cart-item {
+        padding: 12px;
+        margin-bottom: 8px;
+    }
+
+    .cart-item-name {
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+
+    .cart-item-price {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .cart-item-controls {
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+
+    .quantity-btn {
+        min-width: 36px;
+        min-height: 36px;
+        font-size: 14px;
+    }
+
+    .cart-item-qty {
+        padding: 4px 8px;
+        min-width: 45px;
+        font-size: 12px;
+    }
+
+    .remove-btn {
+        padding: 4px 8px;
+        font-size: 11px;
+        margin-left: auto;
+    }
+
+    .cart-item-total {
+        font-size: 13px;
+    }
+
+    .empty-cart {
+        padding: 20px 10px;
+        font-size: 16px;
+    }
+
+    /* Оформление заказа */
+    .checkout-header {
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .checkout-header h2 {
+        font-size: 16px;
+    }
+
+    .checkout-container {
+        gap: 15px;
+    }
+
+    .checkout-form-section,
+    .checkout-cart-section,
+    .order-summary {
+        padding: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 12px;
+    }
+
+    .form-group label {
+        font-size: 13px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 10px;
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .submit-button {
+        padding: 12px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+
+    .checkout-summary {
+        margin-top: 15px;
+    }
+
+    .summary-item {
+        font-size: 13px;
+        padding: 8px 0;
+    }
+
+    /* Модальное окно */
+    .modal-content {
+        padding: 20px;
+        max-width: 85vw;
+    }
+
+    .modal-content h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .modal-content p {
+        font-size: 13px;
+        margin-bottom: 8px;
+    }
+
+    .modal-buttons button {
+        padding: 10px;
+        font-size: 13px;
+        min-height: 44px;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">kosmos</h1>
+            <button class="cart-button" onclick="toggleCart()">
+                🛒 <span class="cart-count" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Боковое меню -->
+        <aside class="sidebar">
+            <h3>Категории</h3>
+            <ul class="categories-list" id="categoriesList"></ul>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Главная -->
+            <div id="homePage" class="page active">
+                <div class="categories-grid" id="categoriesGrid"></div>
+            </div>
+
+            <!-- Категория с товарами -->
+            <div id="categoryPage" class="page">
+                <div class="category-header">
+                    <button class="back-button" onclick="goHome()">← Назад</button>
+                    <h2 id="categoryTitle"></h2>
+                </div>
+                <div class="products-grid" id="productsGrid"></div>
+            </div>
+
+            <!-- Оформление заказа -->
+            <div id="checkoutPage" class="page">
+                <div class="checkout-header">
+                    <button class="back-button" onclick="backToCart()">← Вернуться</button>
+                    <h2>Оформление заказа</h2>
+                </div>
+                <div class="checkout-container">
+                    <div class="checkout-form-section">
+                        <h3>Ваши данные</h3>
+                        <form id="checkoutForm" onsubmit="submitOrder(event)">
+                            <div class="form-group">
+                                <label for="customerName">Ваше имя *</label>
+                                <input type="text" id="customerName" required placeholder="Иван Петров">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerPhone">Телефон *</label>
+                                <input type="tel" id="customerPhone" required placeholder="+996 555 123456">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerEmail">Email (опционально)</label>
+                                <input type="email" id="customerEmail" placeholder="ваш@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerAddress">Адрес доставки</label>
+                                <textarea id="customerAddress" placeholder="Адрес доставки" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="submit-button">Оформить заказ</button>
+                        </form>
+                    </div>
+                    <div class="order-summary">
+                        <h3>Корзина</h3>
+                        <div id="orderSummaryItems"></div>
+                        <div class="order-total">
+                            <span>Итого:</span>
+                            <span id="orderSummaryTotal">0 ₽</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Боковая панель корзины -->
+    <div id="cartPanel" class="cart-panel">
+        <div class="cart-panel-header">
+            <h2>🛒 Корзина</h2>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Итого:</span>
+                <span id="cartTotal">0 ₽</span>
+            </div>
+            <button class="checkout-button" onclick="checkout()">Оформить заказ</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно успеха -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div style="font-size: 60px; margin-bottom: 20px;">✓</div>
+            <h2>Спасибо за заказ!</h2>
+            <p id="modalMessage"></p>
+            <div class="modal-buttons">
+                <button class="modal-btn-primary" onclick="completeOrder()">Продолжить покупки</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// ДАННЫЕ ТОВАРОВ
+const categories = [
+    { id: 0, name: 'Все товары', description: 'Весь доступный ассортимент' },
+    { id: 1, name: 'пакеты', description: 'Упаковка и пакеты' },
+    { id: 2, name: 'концтовар', description: 'Канцелярские товары' },
+    { id: 3, name: 'Игрушки', description: 'Игрушки и развлечения' },
+    { id: 4, name: 'Хозтовар', description: 'Хозяйственные товары' },
+    { id: 5, name: 'Продукты', description: 'Продукты и сладости' },
+    { id: 6, name: 'Аксессуары', description: 'Электроника и аксессуары' }
+];
+
+const products = {
+    "1": [
+        { "id": 1, "name": "Пакет цветочный", "priceRetail": 5.0, "priceWholesale": 4.5, "wholesaleFrom": 100, "description": "", "image": "CSSN9505.PNG" },
+        { "id": 2, "name": "Пакет цветочный ориг", "priceRetail": 8.0, "priceWholesale": 7.5, "wholesaleFrom": 100, "description": "", "image": "EVFF3446.PNG" },
+        { "id": 3, "name": "пакет shaviki ", "priceRetail": 90.0, "priceWholesale": 85.0, "wholesaleFrom": 10, "description": "", "image": "6890-700x770.jpg" },
+        { "id": 4, "name": "пакет М", "priceRetail": 70.0, "priceWholesale": 65.0, "wholesaleFrom": 10, "description": "", "image": "7068-700x770.jpg" },
+        { "id": 5, "name": "Пакет Бочка", "priceRetail": 170.0, "priceWholesale": 155.0, "wholesaleFrom": 10, "description": "", "image": "IYXH6374.PNG" },
+        { "id": 6, "name": "Пакет Клубника", "priceRetail": 115.0, "priceWholesale": 105.0, "wholesaleFrom": 10, "description": "", "image": "CZYA9400.PNG" },
+        { "id": 7, "name": "Пакет без ручка", "priceRetail": 135.0, "priceWholesale": 125.0, "wholesaleFrom": 10, "description": "", "image": "images (6).jpg" },
+        { "id": 8, "name": "пакет семечка 500", "priceRetail": 55.0, "priceWholesale": 50.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 9, "name": "Пакет семочка 1000", "priceRetail": 115.0, "priceWholesale": 105.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 10, "name": "Пакет веасовой 32", "priceRetail": 190.0, "priceWholesale": 180.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 11, "name": "Пакет Весовой бочок", "priceRetail": 190.0, "priceWholesale": 180.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 12, "name": "Стакан мальнкий", "priceRetail": 30.0, "priceWholesale": 25.0, "wholesaleFrom": 10, "description": "", "image": "11642-700x770.jpg" },
+        { "id": 13, "name": "Стакан Большой", "priceRetail": 50.0, "priceWholesale": 45.0, "wholesaleFrom": 10, "description": "", "image": "images (7).jpg" },
+        { "id": 14, "name": "Контейнер лоток", "priceRetail": 120.0, "priceWholesale": 110.0, "wholesaleFrom": 10, "description": "", "image": "images (4).jpg" }
+    ],
+    "2": [
+        { "id": 15, "name": "Супница", "priceRetail": 340.0, "priceWholesale": 320.0, "wholesaleFrom": 5, "description": "", "image": "№-18-sup-100-ml-prozr-scaled.jpg" },
+        { "id": 16, "name": "Ручка Ball", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "53791120.jpeg" },
+        { "id": 17, "name": "Ручка Старлайн", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия.jpg" },
+        { "id": 18, "name": "Ручка Максрайтер синий", "priceRetail": 80.0, "priceWholesale": 75.0, "wholesaleFrom": 10, "description": "", "image": "7292986546.jpg" },
+        { "id": 19, "name": "Ручка Максрайтер Зеленый", "priceRetail": 80.0, "priceWholesale": 75.0, "wholesaleFrom": 10, "description": "", "image": "53790291.jpeg" },
+        { "id": 20, "name": "Ручка Максрайтер красный", "priceRetail": 80.0, "priceWholesale": 75.0, "wholesaleFrom": 10, "description": "", "image": "53784231.jpeg" },
+        { "id": 21, "name": "Ручка Максрайтер черный", "priceRetail": 80.0, "priceWholesale": 75.0, "wholesaleFrom": 10, "description": "", "image": "53791120.jpeg" },
+        { "id": 22, "name": "Стирающая ручка М", "priceRetail": 130.0, "priceWholesale": 110.0, "wholesaleFrom": 5, "description": "", "image": "700-nw.jpg" },
+        { "id": 23, "name": "Стирающая ручка Д", "priceRetail": 130.0, "priceWholesale": 110.0, "wholesaleFrom": 5, "description": "", "image": "images (2).jpg" },
+        { "id": 24, "name": "Ручка Максрайтер XC Синий", "priceRetail": 150.0, "priceWholesale": 130.0, "wholesaleFrom": 10, "description": "", "image": "7191419182.jpg" },
+        { "id": 25, "name": "Ручка Максрайтер XC красный", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images.jpg" },
+        { "id": 26, "name": "Ручка Максрайтер XC черный", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 27, "name": "Ручка Максрайтер XC зеленый", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "XEGG9240.PNG" },
+        { "id": 28, "name": "Ручка геливая синий ", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 5, "description": "", "image": "820-820--imeni-11.11.jpg" },
+        { "id": 29, "name": "Ручка геливая черный", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 5, "description": "", "image": "PNQN8679.PNG" },
+        { "id": 30, "name": "Ручка геливая зеленая", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 31, "name": "Ручка геливая красный", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 5, "description": "", "image": "QCEW7556.PNG" },
+        { "id": 32, "name": "Ручка КМ", "priceRetail": 420.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "5017_big.jpg" },
+        { "id": 33, "name": "Ручка ориг", "priceRetail": 750.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (1).jpg" },
+        { "id": 34, "name": "Карандаш простой", "priceRetail": 40.0, "priceWholesale": 36.0, "wholesaleFrom": 6, "description": "", "image": "IMG_1028.PNG" },
+        { "id": 35, "name": "Карандаш конструктор", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 36, "name": "Карандаш цветной 6", "priceRetail": 20.0, "priceWholesale": 17.0, "wholesaleFrom": 12, "description": "", "image": "82601060_004.jpg" },
+        { "id": 37, "name": "Карандаш цветной 12", "priceRetail": 35.0, "priceWholesale": 28.0, "wholesaleFrom": 12, "description": "", "image": "images (3).jpg" },
+        { "id": 38, "name": "Фломастер ", "priceRetail": 40.0, "priceWholesale": 35.0, "wholesaleFrom": 10, "description": "", "image": "LKGF6088.PNG" },
+        { "id": 39, "name": "Замаска", "priceRetail": 420.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "OVGZ4209.PNG" },
+        { "id": 40, "name": "Клей Stik 15гр", "priceRetail": 400.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "200-1000x1000.jpg" },
+        { "id": 41, "name": "Клей Stik 8гр ", "priceRetail": 360.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "13b6e111-6cf5-11ef-828d-b06ebf621f61_1.jpeg" },
+        { "id": 42, "name": "Тетрадь 12л  Клетка", "priceRetail": 5.0, "priceWholesale": 4.8, "wholesaleFrom": 100, "description": "", "image": "14727.310.jpg" },
+        { "id": 43, "name": " Тетрадь 12л Боль линия", "priceRetail": 5.0, "priceWholesale": 4.8, "wholesaleFrom": 100, "description": "", "image": "14727.310.jpg" },
+        { "id": 44, "name": "Тетрадь 12л  мал линия", "priceRetail": 5.0, "priceWholesale": 4.8, "wholesaleFrom": 100, "description": "", "image": "14727.310.jpg" },
+        { "id": 45, "name": "Тетрадь 24л ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 46, "name": "Тетрадь 36л ", "priceRetail": 20.0, "priceWholesale": 18.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 47, "name": "Тетрадь 48л", "priceRetail": 25.0, "priceWholesale": 23.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 48, "name": "Тетрадь 96л", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "RQIS3534.PNG" },
+        { "id": 49, "name": "А4 лист ", "priceRetail": 340.0, "priceWholesale": 320.0, "wholesaleFrom": 5, "description": "", "image": "Илим-Стандарт1.jpg" },
+        { "id": 50, "name": "КММ", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 51, "name": "Маркер ", "priceRetail": 70.0, "priceWholesale": 60.0, "wholesaleFrom": 5, "description": "", "image": "OYGC9003.PNG" },
+        { "id": 52, "name": "Маркер ориг", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 5, "description": "", "image": "DBAJ1484.PNG" },
+        { "id": 53, "name": "Маркер стирающий", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 5, "description": "", "image": "NDGL6854.PNG" },
+        { "id": 54, "name": "Маркер 2 сторонний", "priceRetail": 130.0, "priceWholesale": 120.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 55, "name": "Ценник пистолет", "priceRetail": 260.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "etiket_pistolet_dlya_tsennikov_21x12mm_sinego_tsveta.jpg" },
+        { "id": 56, "name": "Ценник ", "priceRetail": 100.0, "priceWholesale": 90.0, "wholesaleFrom": 12, "description": "", "image": "images (8).jpg" },
+        { "id": 57, "name": "Расскраска", "priceRetail": 25.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 58, "name": "Расскраска+наклейка", "priceRetail": 60.0, "priceWholesale": 55.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 60, "name": "Блокнот с ключом", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 61, "name": "Блокнот детский", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 62, "name": "Блокнот А5", "priceRetail": 130.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 63, "name": "Блокнот ", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 64, "name": "ежедневник", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 65, "name": "Запас", "priceRetail": 100.0, "priceWholesale": 90.0, "wholesaleFrom": 24, "description": "", "image": "WDLG1069.PNG" },
+        { "id": 66, "name": "Цветная Бумага", "priceRetail": 20.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "LORJ3799.PNG" },
+        { "id": 67, "name": "файл", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "VWDI5679.PNG" },
+        { "id": 68, "name": "обложка", "priceRetail": 130.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 69, "name": "Альбом мал", "priceRetail": 30.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 70, "name": "Альбом бол 16", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 71, "name": "кисточка", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 72, "name": "краска ", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 73, "name": "краска ориг", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 74, "name": "Линейка 15см", "priceRetail": 15.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "middlesize.jpg" },
+        { "id": 75, "name": "линейка 20см", "priceRetail": 20.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "0084o-linejka-20sm-3.jpg" },
+        { "id": 76, "name": "циркуль", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 77, "name": "Конверт бол", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 78, "name": "Конверт мал", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 143, "name": "калькулятор большой", "priceRetail": 350.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 144, "name": "калькулятор ", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 274, "name": "наклейка ", "priceRetail": 40.0, "priceWholesale": 35.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 427, "name": "пластилин", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null }
+    ],
+    "3": [
+        { "id": 79, "name": "Ширибом Лента", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "GHXN2672.PNG" },
+        { "id": 80, "name": "Ширибом золотой", "priceRetail": 80.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "LZJE2037.PNG" },
+        { "id": 81, "name": "Ширибом китай", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "DJUK9083.PNG" },
+        { "id": 82, "name": "Ширибом узб", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 83, "name": "Ширибом круг", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 84, "name": "Пузырь", "priceRetail": 430.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 85, "name": "Пузырь бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 86, "name": "лизун мал", "priceRetail": 430.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 87, "name": "лизун бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 88, "name": "Слайм", "priceRetail": 50.0, "priceWholesale": 40.0, "wholesaleFrom": 10, "description": "", "image": "images (9).jpg" },
+        { "id": 89, "name": "Чи топ", "priceRetail": 840.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 90, "name": "Читоп бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 91, "name": "топ космический", "priceRetail": 400.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 92, "name": "Пистолет порох", "priceRetail": 380.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 93, "name": "пистолет шар", "priceRetail": 65.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "FSEO8684.PNG" },
+        { "id": 94, "name": "дробовик", "priceRetail": 65.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "WNVS5031.PNG" },
+        { "id": 95, "name": "Писолет желтый", "priceRetail": 60.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 96, "name": "Писолет лазер", "priceRetail": 70.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "AWPE4420.PNG" },
+        { "id": 97, "name": "пистолет 103", "priceRetail": 30.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "VWMG9297.PNG" },
+        { "id": 98, "name": "пистолет орбис", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 99, "name": "автомат орбис", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 100, "name": "Калаш ак-47", "priceRetail": 130.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 101, "name": "Машина механический", "priceRetail": 280.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 102, "name": "машина спец", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 103, "name": "машина лифан", "priceRetail": 900.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "DYYM4152.PNG" },
+        { "id": 104, "name": "машина дпс", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 105, "name": "машина гелик", "priceRetail": 320.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 106, "name": "машина ренж ровер", "priceRetail": 320.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 107, "name": "машина сафари", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 108, "name": "машина гелик музыкальный", "priceRetail": 1920.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "OMPX9525.PNG" },
+        { "id": 109, "name": "машина скорая помощь", "priceRetail": 1450.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "OOKB0766.PNG" },
+        { "id": 110, "name": "машина пульт управления бол", "priceRetail": 800.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 111, "name": "Машина пульт управления деш", "priceRetail": 330.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 112, "name": "Машина кабриолет", "priceRetail": 90.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "KKRU8212.PNG" },
+        { "id": 113, "name": "Машина доска машина", "priceRetail": 380.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "XHTG2959.PNG" },
+        { "id": 114, "name": "Машина жигули", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "JUPS3088.PNG" },
+        { "id": 115, "name": "Патрон желтый", "priceRetail": 320.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 116, "name": "патрон орбиз", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 117, "name": "патрон порох", "priceRetail": 780.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "BCKB5636.PNG" },
+        { "id": 118, "name": "скакалка бол", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 119, "name": "скакалка мал", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 120, "name": "кукла бол", "priceRetail": 220.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 121, "name": "кукла мал", "priceRetail": 140.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "OJPD1196.PNG" },
+        { "id": 122, "name": "кукла глюкоза", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 123, "name": "кукла узб", "priceRetail": 190.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 124, "name": "кукла брелок", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 125, "name": "пиримада мал", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 126, "name": "пирамида сред", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 127, "name": "пирамида бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 128, "name": "кубик рубик узб", "priceRetail": 20.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 129, "name": "кубик ориг", "priceRetail": 70.0, "priceWholesale": 65.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 130, "name": "топ ежик", "priceRetail": 15.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 131, "name": "топ арбуз", "priceRetail": 30.0, "priceWholesale": 25.0, "wholesaleFrom": 30, "description": "", "image": null },
+        { "id": 132, "name": "топ футбол", "priceRetail": 130.0, "priceWholesale": 120.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 133, "name": "топ резинка", "priceRetail": 180.0, "priceWholesale": 170.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 134, "name": "топ микаса фут", "priceRetail": 250.0, "priceWholesale": 230.0, "wholesaleFrom": 20, "description": "", "image": "Без названия (1).jpg" },
+        { "id": 135, "name": "топ волейбол", "priceRetail": 130.0, "priceWholesale": 120.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 136, "name": "том микаса волейбол", "priceRetail": 250.0, "priceWholesale": 230.0, "wholesaleFrom": 20, "description": "", "image": "Без названия (1).jpg" },
+        { "id": 137, "name": "топ детский", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 138, "name": "топ ориг", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 139, "name": "насос", "priceRetail": 180.0, "priceWholesale": 150.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 140, "name": "насос большой ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 141, "name": "пипка ", "priceRetail": 5.0, "priceWholesale": 3.0, "wholesaleFrom": 100, "description": "", "image": "Без названия (3).jpg" },
+        { "id": 142, "name": "сетка для мячей", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (10).jpg" },
+        { "id": 145, "name": "шашка", "priceRetail": 25.0, "priceWholesale": 22.0, "wholesaleFrom": 20, "description": "", "image": "MQFT6024.PNG" },
+        { "id": 146, "name": "шашка доска ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 147, "name": "хозяюшка ", "priceRetail": 75.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 148, "name": "набор посуда ", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 149, "name": "набор посуда больш", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 150, "name": "трактор больш", "priceRetail": 260.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 151, "name": "трактор ", "priceRetail": 140.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 152, "name": "камаз шар", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 153, "name": "ренжровер пульт ", "priceRetail": 280.0, "priceWholesale": 260.0, "wholesaleFrom": 6, "description": "", "image": null },
+        { "id": 154, "name": "жигули пульт ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 155, "name": "жигули пульт больш", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 156, "name": "шайтан топ", "priceRetail": 450.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 162, "name": "лего конструктор 111шт", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 163, "name": "конструктор боль", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 164, "name": "бовлинг ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 165, "name": "мошина 999", "priceRetail": 150.0, "priceWholesale": 140.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 196, "name": "лазер  ", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 197, "name": "доска цепочка ", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "WIVL6377.PNG" },
+        { "id": 198, "name": "доска заколка ", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 199, "name": "доска липучка ", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "BHBW9223.PNG" },
+        { "id": 200, "name": "доска бомбочка ", "priceRetail": 140.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "RSLW9673.PNG" },
+        { "id": 201, "name": "доска орбиз", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "CSPX2369.PNG" },
+        { "id": 202, "name": "доска резинка ", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "IAQE6370.PNG" },
+        { "id": 203, "name": "доска нож", "priceRetail": 280.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "ROXV6426.PNG" },
+        { "id": 204, "name": "доска  черн нож", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 205, "name": "доска змея ", "priceRetail": 320.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 206, "name": "доска спинер", "priceRetail": 480.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "TFPJ3765.PNG" },
+        { "id": 207, "name": "доска магнит", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 208, "name": "доска шар", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "WQBS3314.PNG" },
+        { "id": 209, "name": "доска пазл ", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "RHJW1985.PNG" },
+        { "id": 210, "name": "доска браслет", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 211, "name": "доска пистолет", "priceRetail": 360.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 212, "name": "шар ориг", "priceRetail": 250.0, "priceWholesale": 230.0, "wholesaleFrom": 5, "description": "", "image": "CWBS3894.PNG" },
+        { "id": 213, "name": "шар синий", "priceRetail": 250.0, "priceWholesale": 230.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 214, "name": "шар белый", "priceRetail": 250.0, "priceWholesale": 230.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 215, "name": "шар красный", "priceRetail": 250.0, "priceWholesale": 230.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 216, "name": "шар", "priceRetail": 190.0, "priceWholesale": 180.0, "wholesaleFrom": 5, "description": "", "image": "AYUV1716.PNG" },
+        { "id": 217, "name": "шар насос", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 218, "name": "набор животных ", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "IYVB2683.PNG" },
+        { "id": 219, "name": "набор животных 2", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 382, "name": "ракетка", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 383, "name": "пистолет пузырь", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 384, "name": "пузырь 2", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 385, "name": "указка", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (16).jpg" },
+        { "id": 428, "name": "брелок", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null }
+    ],
+    "4": [
+        { "id": 157, "name": "хна санам ", "priceRetail": 240.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 158, "name": "хна роял красный", "priceRetail": 130.0, "priceWholesale": 120.0, "wholesaleFrom": 12, "description": "", "image": "izobrazhenie_viber_2020-06-10_14-17-04.jpg" },
+        { "id": 159, "name": "хна роял баклажан", "priceRetail": 130.0, "priceWholesale": 120.0, "wholesaleFrom": 12, "description": "", "image": "izobrazhenie_viber_2020-06-10_14-17-51-400x567.jpg" },
+        { "id": 160, "name": "хна роял черный", "priceRetail": 130.0, "priceWholesale": 120.0, "wholesaleFrom": 12, "description": "", "image": "Без названия (4).jpg" },
+        { "id": 161, "name": "хна монстр", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 166, "name": "неведимка больш", "priceRetail": 25.0, "priceWholesale": 20.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 167, "name": "неведимка мал", "priceRetail": 15.0, "priceWholesale": 12.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 168, "name": "резинка баклажка ", "priceRetail": 50.0, "priceWholesale": 45.0, "wholesaleFrom": 12, "description": "", "image": null },
+        { "id": 169, "name": "резинка черн", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 170, "name": "булавка ", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 171, "name": "булавка иголка ", "priceRetail": 200.0, "priceWholesale": 180.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 172, "name": "булавка брошка ", "priceRetail": 120.0, "priceWholesale": 100.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 173, "name": "булавка дорог", "priceRetail": 150.0, "priceWholesale": 135.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 174, "name": "булавка круг", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 175, "name": "иголка ", "priceRetail": 10.0, "priceWholesale": 8.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 176, "name": "резинка пачка ", "priceRetail": 350.0, "priceWholesale": 330.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 177, "name": "перчатка одн l", "priceRetail": 180.0, "priceWholesale": 175.0, "wholesaleFrom": 4, "description": "", "image": null },
+        { "id": 178, "name": "перчатка  одн M", "priceRetail": 180.0, "priceWholesale": 175.0, "wholesaleFrom": 4, "description": "", "image": null },
+        { "id": 179, "name": " перчатка зел", "priceRetail": 190.0, "priceWholesale": 175.0, "wholesaleFrom": 5, "description": "", "image": "ORIN9636.PNG" },
+        { "id": 180, "name": "перчатка тряпка", "priceRetail": 160.0, "priceWholesale": 150.0, "wholesaleFrom": 5, "description": "", "image": "CXKL3437.PNG" },
+        { "id": 181, "name": "перчатка лилия", "priceRetail": 35.0, "priceWholesale": 30.0, "wholesaleFrom": 20, "description": "", "image": "QPDO1040.PNG" },
+        { "id": 182, "name": "перчтака красн", "priceRetail": 75.0, "priceWholesale": 68.0, "wholesaleFrom": 20, "description": "", "image": "BNJD3157.PNG" },
+        { "id": 183, "name": "перчатка оранж", "priceRetail": 280.0, "priceWholesale": 250.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 184, "name": "мачалка рука", "priceRetail": 15.0, "priceWholesale": 13.0, "wholesaleFrom": 24, "description": "", "image": "YBMD9977.PNG" },
+        { "id": 185, "name": "мачалка варежка ", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 186, "name": "мачалка корейский ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 187, "name": "губка пчелка ", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 188, "name": "губка бест", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 189, "name": "губка некст", "priceRetail": 45.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 190, "name": "тряка 3в1 ", "priceRetail": 280.0, "priceWholesale": 250.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 191, "name": "тряпка 3в1 ориг", "priceRetail": 480.0, "priceWholesale": 450.0, "wholesaleFrom": 20, "description": "", "image": "LXBO8321.PNG" },
+        { "id": 192, "name": "расческа маль", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 193, "name": "расческа больш", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 194, "name": "пылесос 2щ", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 195, "name": "пылесос 3щ", "priceRetail": 70.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "TLWR4225.PNG" },
+        { "id": 220, "name": "лампочка 10в", "priceRetail": 500.0, "priceWholesale": 450.0, "wholesaleFrom": 2, "description": "", "image": "UNPV8361.PNG" },
+        { "id": 221, "name": "лампочка 12в", "priceRetail": 650.0, "priceWholesale": 600.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 222, "name": "лампочка 15в", "priceRetail": 700.0, "priceWholesale": 650.0, "wholesaleFrom": 2, "description": "", "image": "RACH7187.PNG" },
+        { "id": 223, "name": "лампочка 18в", "priceRetail": 750.0, "priceWholesale": 700.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 224, "name": "лампочка 20в", "priceRetail": 800.0, "priceWholesale": 750.0, "wholesaleFrom": 2, "description": "", "image": "NOOW1519.PNG" },
+        { "id": 225, "name": "лампочка 30в", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 226, "name": "лампочка батарея", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 227, "name": "батарея  для лампочк", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 228, "name": "батарея сони ", "priceRetail": 380.0, "priceWholesale": 360.0, "wholesaleFrom": 2, "description": "", "image": "VOBQ1266.PNG" },
+        { "id": 229, "name": "батарея сони больш", "priceRetail": 480.0, "priceWholesale": 460.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 230, "name": "батарея победа ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 231, "name": "батарея победа больш", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 232, "name": "батарея средн", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 233, "name": "батарея больш", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 234, "name": "батарея квадрат", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 235, "name": "батарея таблетка", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 236, "name": "батарея таблетка2 ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 237, "name": "батарея таблетка  3", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 238, "name": "обувь крем", "priceRetail": 250.0, "priceWholesale": 220.0, "wholesaleFrom": 2, "description": "", "image": "MTLS1917.PNG" },
+        { "id": 239, "name": "обувь крем ориг", "priceRetail": 800.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 240, "name": "обувь губка крем", "priceRetail": 540.0, "priceWholesale": 520.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 241, "name": "обувь губка блеск", "priceRetail": 35.0, "priceWholesale": 32.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 242, "name": "обувь щетка ", "priceRetail": 25.0, "priceWholesale": 20.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 243, "name": "щетка ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 244, "name": "щетка сред", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 245, "name": "щетка больш", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 246, "name": "губка метал калбаса", "priceRetail": 55.0, "priceWholesale": 50.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 247, "name": "губка корей", "priceRetail": 25.0, "priceWholesale": 19.0, "wholesaleFrom": 20, "description": "", "image": "UUDS3216.PNG" },
+        { "id": 248, "name": "губка ручка дерев", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 249, "name": "кусачка ", "priceRetail": 280.0, "priceWholesale": 260.0, "wholesaleFrom": 2, "description": "", "image": "LACN7624.PNG" },
+        { "id": 250, "name": "кусачка ориг", "priceRetail": 400.0, "priceWholesale": 380.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 251, "name": "кусачка угол", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 252, "name": "зубная щетка", "priceRetail": 28.0, "priceWholesale": 25.0, "wholesaleFrom": 50, "description": "", "image": null },
+        { "id": 253, "name": "зубная щетка фултяре", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "IWQX2501.PNG" },
+        { "id": 254, "name": "зубная щетка детдская", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 255, "name": "зубная паста", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 256, "name": "зубная паста мальнкая", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 257, "name": "ножницы", "priceRetail": 40.0, "priceWholesale": 35.0, "wholesaleFrom": 12, "description": "", "image": null },
+        { "id": 258, "name": "ножницы сред", "priceRetail": 70.0, "priceWholesale": 65.0, "wholesaleFrom": 12, "description": "", "image": null },
+        { "id": 259, "name": "ножницы бол", "priceRetail": 80.0, "priceWholesale": 75.0, "wholesaleFrom": 12, "description": "", "image": null },
+        { "id": 260, "name": "нож", "priceRetail": 50.0, "priceWholesale": 45.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 261, "name": "нож лента", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 262, "name": "супер клей ", "priceRetail": 8.0, "priceWholesale": 7.0, "wholesaleFrom": 100, "description": "", "image": null },
+        { "id": 263, "name": "супер клей бол", "priceRetail": 20.0, "priceWholesale": 18.0, "wholesaleFrom": 30, "description": "", "image": null },
+        { "id": 264, "name": "пистолет клей", "priceRetail": 3.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 265, "name": "зубочистка", "priceRetail": 190.0, "priceWholesale": 170.0, "wholesaleFrom": 3, "description": "", "image": "IVZY3372.PNG" },
+        { "id": 266, "name": "ватная палочка", "priceRetail": 150.0, "priceWholesale": 135.0, "wholesaleFrom": 3, "description": "", "image": null },
+        { "id": 267, "name": "bavi 60гр", "priceRetail": 780.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "APCQ9917.PNG" },
+        { "id": 268, "name": "bavi  300гр", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 269, "name": "зажигалка", "priceRetail": 550.0, "priceWholesale": 530.0, "wholesaleFrom": 33, "description": "", "image": "FTIM4644.PNG" },
+        { "id": 270, "name": "спичка", "priceRetail": 14.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 271, "name": "Зажигалка бол", "priceRetail": 700.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 276, "name": "Скоч для денег", "priceRetail": 80.0, "priceWholesale": 70.0, "wholesaleFrom": 5, "description": "", "image": "CNTJ2466.PNG" },
+        { "id": 277, "name": "Скоч 40/30", "priceRetail": 180.0, "priceWholesale": 150.0, "wholesaleFrom": 5, "description": "", "image": "FZXB2633.PNG" },
+        { "id": 278, "name": "скоч 40/75", "priceRetail": 300.0, "priceWholesale": 270.0, "wholesaleFrom": 5, "description": "", "image": "JCHA7414.PNG" },
+        { "id": 279, "name": "скоч 40/200", "priceRetail": 570.0, "priceWholesale": 550.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 280, "name": "скоч 50/100", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 281, "name": "изолента синий", "priceRetail": 200.0, "priceWholesale": 170.0, "wholesaleFrom": 3, "description": "", "image": null },
+        { "id": 282, "name": "изолента черный", "priceRetail": 200.0, "priceWholesale": 170.0, "wholesaleFrom": 3, "description": "", "image": "AUIG5034.PNG" },
+        { "id": 283, "name": "изолента ориг", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 284, "name": "мышь клей", "priceRetail": 23.0, "priceWholesale": 18.0, "wholesaleFrom": 100, "description": "", "image": "LFXU3063.PNG" },
+        { "id": 285, "name": "мышь клей бол", "priceRetail": 40.0, "priceWholesale": 35.0, "wholesaleFrom": 100, "description": "", "image": null },
+        { "id": 286, "name": "муха клей", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 287, "name": "мел для муравев", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 288, "name": "яд крысиный", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 289, "name": "Рапира", "priceRetail": 190.0, "priceWholesale": 180.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 290, "name": "Дорко", "priceRetail": 600.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "PYNF3135.PNG" },
+        { "id": 291, "name": "дорко  тж-2", "priceRetail": 700.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 292, "name": "резинка для штанов", "priceRetail": 240.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "NJAY6804.PNG" },
+        { "id": 293, "name": "нитки черные", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 294, "name": "нитки для машин черные", "priceRetail": 360.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 295, "name": "иголки для машин", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 296, "name": "вазелин", "priceRetail": 420.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 297, "name": "малхам", "priceRetail": 540.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "KKNF0936.PNG" },
+        { "id": 298, "name": "вазелин деш", "priceRetail": 360.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 299, "name": "нитки цветные ", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 300, "name": "нитки для машин белые ", "priceRetail": 360.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 301, "name": "резинка для денег", "priceRetail": 40.0, "priceWholesale": 35.0, "wholesaleFrom": 12, "description": "", "image": "YESB6916.PNG" },
+        { "id": 302, "name": "  тряпка дельфин", "priceRetail": 60.0, "priceWholesale": 50.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 303, "name": "тряпка кенгуру ", "priceRetail": 80.0, "priceWholesale": 70.0, "wholesaleFrom": 10, "description": "", "image": "IUQN9370.PNG" },
+        { "id": 304, "name": "тряпка ориг", "priceRetail": 170.0, "priceWholesale": 150.0, "wholesaleFrom": 10, "description": "", "image": "LJYC3730.PNG" },
+        { "id": 305, "name": "тряпка", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 423, "name": "свечи бол", "priceRetail": 190.0, "priceWholesale": 170.0, "wholesaleFrom": 3, "description": "", "image": null },
+        { "id": 424, "name": "свечи мал", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 429, "name": " grass антижир", "priceRetail": 140.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 430, "name": "китайское мыло", "priceRetail": 90.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 431, "name": "белла мал", "priceRetail": 90.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 432, "name": "белла бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 433, "name": "дрож yuva ", "priceRetail": 32.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 434, "name": "дрож  фариман", "priceRetail": 165.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 435, "name": "пищивая пленка 1500", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 436, "name": "зубочиска tessa", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null }
+    ],
+    "5": [
+        { "id": 272, "name": "Maccoffe orig", "priceRetail": 360.0, "priceWholesale": 350.0, "wholesaleFrom": 3, "description": "", "image": "ELZF6863.PNG" },
+        { "id": 273, "name": "кофе crown", "priceRetail": 340.0, "priceWholesale": 330.0, "wholesaleFrom": 3, "description": "", "image": "BGEQ3271.PNG" },
+        { "id": 275, "name": "Maccoffe деш", "priceRetail": 120.0, "priceWholesale": 100.0, "wholesaleFrom": 5, "description": "", "image": "FHMZ0745.PNG" },
+        { "id": 387, "name": "приз", "priceRetail": 400.0, "priceWholesale": 380.0, "wholesaleFrom": 5, "description": "", "image": null },
+        { "id": 388, "name": "zizi касета", "priceRetail": 120.0, "priceWholesale": 115.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 389, "name": "zizi hero", "priceRetail": 130.0, "priceWholesale": 125.0, "wholesaleFrom": 10, "description": "", "image": "Без названия (15).jpg" },
+        { "id": 390, "name": "zizi", "priceRetail": 120.0, "priceWholesale": 110.0, "wholesaleFrom": 10, "description": "", "image": "Без названия (14).jpg" },
+        { "id": 391, "name": "trix клубника", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 2, "description": "", "image": "Без названия (11).jpg" },
+        { "id": 392, "name": "trix вишна", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 2, "description": "", "image": "images (11).jpg" },
+        { "id": 393, "name": "trix кола", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 4, "description": "", "image": "Без названия (9).jpg" },
+        { "id": 394, "name": "trix персик", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 2, "description": "", "image": "Без названия (10).jpg" },
+        { "id": 395, "name": "trix банан", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 2, "description": "", "image": "rastvorimyi-napitok-trix-banana-9-gr.jpg" },
+        { "id": 396, "name": "trix мульти", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 397, "name": "dirol мята", "priceRetail": 350.0, "priceWholesale": 340.0, "wholesaleFrom": 5, "description": "", "image": "Без названия (13).jpg" },
+        { "id": 398, "name": "dirol дыня", "priceRetail": 350.0, "priceWholesale": 340.0, "wholesaleFrom": 5, "description": "", "image": "Без названия (12).jpg" },
+        { "id": 399, "name": "аскарбинка таблетка", "priceRetail": 65.0, "priceWholesale": 60.0, "wholesaleFrom": 5, "description": "", "image": "Без названия (17).jpg" },
+        { "id": 400, "name": "аскарбинка ", "priceRetail": 210.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (18).jpg" },
+        { "id": 401, "name": "соска", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 402, "name": "писталет чупс", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 403, "name": "биокурт синий", "priceRetail": 180.0, "priceWholesale": 175.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 404, "name": "биокурт красный", "priceRetail": 180.0, "priceWholesale": 175.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 405, "name": "кыргыз курт", "priceRetail": 180.0, "priceWholesale": 175.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 406, "name": "легенда ", "priceRetail": 180.0, "priceWholesale": 170.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 407, "name": "легенда капченый", "priceRetail": 180.0, "priceWholesale": 170.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 408, "name": "рожок", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 409, "name": "элемент", "priceRetail": 300.0, "priceWholesale": 285.0, "wholesaleFrom": 12, "description": "", "image": "Без названия (19).jpg" },
+        { "id": 410, "name": "элемент пластик", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (20).jpg" },
+        { "id": 425, "name": "диторино кофе", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 437, "name": "   trix ананас", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 2, "description": "", "image": "Без названия (8).jpg" },
+        { "id": 438, "name": "trix  лимон", "priceRetail": 140.0, "priceWholesale": 135.0, "wholesaleFrom": 2, "description": "", "image": "Без названия (7).jpg" },
+        { "id": 439, "name": "nazar арбуз", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 440, "name": "nazar  мята", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 441, "name": "alif", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 442, "name": "кент разрыхлитель", "priceRetail": 220.0, "priceWholesale": 200.0, "wholesaleFrom": 4, "description": "", "image": "Без названия (6).jpg" },
+        { "id": 443, "name": "кент ванилин", "priceRetail": 220.0, "priceWholesale": 200.0, "wholesaleFrom": 4, "description": "", "image": "Без названия (5).jpg" }
+    ],
+    "6": [
+        { "id": 306, "name": "автономер", "priceRetail": 90.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 307, "name": "автономер+аромизатор", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 308, "name": "крючок", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 309, "name": "П9 про макс", "priceRetail": 380.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (24).jpg" },
+        { "id": 310, "name": "П9", "priceRetail": 230.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (23).jpg" },
+        { "id": 311, "name": "airmax", "priceRetail": 1300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (25).jpg" },
+        { "id": 312, "name": "airmax orig", "priceRetail": 1500.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 313, "name": "airpods", "priceRetail": 800.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (26).jpg" },
+        { "id": 314, "name": "airpods pro3", "priceRetail": 1000.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (27).jpg" },
+        { "id": 315, "name": "airpods lux", "priceRetail": 1500.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 316, "name": "airpods korea", "priceRetail": 3000.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 317, "name": "Dw52", "priceRetail": 380.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 318, "name": "маршел", "priceRetail": 700.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (28).jpg" },
+        { "id": 319, "name": "айфон наушник", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (12).jpg" },
+        { "id": 320, "name": "тайпси наушник", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (29).jpg" },
+        { "id": 321, "name": "инкакс наушник", "priceRetail": 130.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (30).jpg" },
+        { "id": 322, "name": "м97 наушник", "priceRetail": 80.0, "priceWholesale": 70.0, "wholesaleFrom": 10, "description": "", "image": "Без названия (31).jpg" },
+        { "id": 323, "name": "наушник", "priceRetail": 60.0, "priceWholesale": 50.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 324, "name": "120w ", "priceRetail": 500.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (32).jpg" },
+        { "id": 325, "name": "50w", "priceRetail": 500.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (33).jpg" },
+        { "id": 326, "name": "45w", "priceRetail": 450.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (34).jpg" },
+        { "id": 327, "name": "67w", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (32).jpg" },
+        { "id": 328, "name": "67w orig", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 329, "name": "14 pro max", "priceRetail": 350.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "2024-05-24_13-56-30.png" },
+        { "id": 330, "name": "14 pro max lux", "priceRetail": 1000.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 331, "name": "ba21 type", "priceRetail": 180.0, "priceWholesale": 160.0, "wholesaleFrom": 10, "description": "", "image": "Без названия (36).jpg" },
+        { "id": 332, "name": "ba21 micro", "priceRetail": 180.0, "priceWholesale": 160.0, "wholesaleFrom": 10, "description": "", "image": "Без названия (37).jpg" },
+        { "id": 333, "name": "b21  голова", "priceRetail": 140.0, "priceWholesale": 130.0, "wholesaleFrom": 10, "description": "", "image": "Без названия (38).jpg" },
+        { "id": 334, "name": "bx 54 type ", "priceRetail": 70.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (22).jpg" },
+        { "id": 335, "name": "bx54 micro", "priceRetail": 70.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (21).jpg" },
+        { "id": 336, "name": "bx54 айфон", "priceRetail": 70.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия.png" },
+        { "id": 337, "name": "кабель микро", "priceRetail": 45.0, "priceWholesale": 40.0, "wholesaleFrom": 20, "description": "", "image": "1kv07eccquco7myg9p6bbjd9knvb6s95.jpg" },
+        { "id": 338, "name": "кабель айфон", "priceRetail": 45.0, "priceWholesale": 40.0, "wholesaleFrom": 20, "description": "", "image": "tovar132403_2.jpg" },
+        { "id": 339, "name": "кабель тайпси", "priceRetail": 45.0, "priceWholesale": 40.0, "wholesaleFrom": 20, "description": "", "image": "images (14).jpg" },
+        { "id": 340, "name": "напальчник ", "priceRetail": 20.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (15).jpg" },
+        { "id": 341, "name": "аукс", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "6400937222.jpg" },
+        { "id": 342, "name": "аукс тайпси", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "тайпси аукс.jpg" },
+        { "id": 343, "name": "аукс айфон", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (40).jpg" },
+        { "id": 344, "name": "тайпси тайпси", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (16).jpg" },
+        { "id": 345, "name": "тайпси айфон", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "Без названия (41).jpg" },
+        { "id": 346, "name": "айфон голова", "priceRetail": 350.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (17).jpg" },
+        { "id": 347, "name": "голова 45w ", "priceRetail": 280.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (18).jpg" },
+        { "id": 348, "name": "автоголова bz24", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "ojm34jhh8x4vtexeo8ahps9grtbnek2j.jpg" },
+        { "id": 349, "name": "модулятор1", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 350, "name": "модулятор", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 351, "name": "повербанк 10000w", "priceRetail": 650.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "8193756910.jpg" },
+        { "id": 352, "name": "повербанк 20000w", "priceRetail": 800.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (19).jpg" },
+        { "id": 353, "name": "повербанк 30000w", "priceRetail": 1200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "7205626906.jpg" },
+        { "id": 354, "name": "повербанк безпроводной", "priceRetail": 800.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (20).jpg" },
+        { "id": 355, "name": "повербанк безпроводной ориг", "priceRetail": 2500.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 356, "name": "cиликон   тайпси", "priceRetail": 90.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 357, "name": "cиликон микро", "priceRetail": 90.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 358, "name": "cиликон айфон", "priceRetail": 90.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 359, "name": "кабель 2 метра тайпси", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "HFAM2032.PNG" },
+        { "id": 360, "name": "17 про макс ", "priceRetail": 500.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 361, "name": "17 про макс люкс", "priceRetail": 1200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 362, "name": "держатель un-01", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "6523563744.jpg" },
+        { "id": 363, "name": "держатель un-05", "priceRetail": 200.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "гт-05.jpg" },
+        { "id": 364, "name": "держатель борофон", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 365, "name": "держатель борофон 2", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 366, "name": "держатель инкакс", "priceRetail": 240.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 367, "name": "держатель безпроводной", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 368, "name": "держатель безпроводной 2", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 369, "name": "vgr  ", "priceRetail": 600.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "images (21).jpg" },
+        { "id": 370, "name": "вжр тример", "priceRetail": 450.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 371, "name": "машинка 3в 1", "priceRetail": 450.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "210bf86f-c4fb-4851-a691-9934a7fd0b6e.jpg" },
+        { "id": 372, "name": "машинка для волос", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 373, "name": "фен", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 374, "name": "вжр фен", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 375, "name": "25ват головка", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 376, "name": "наушник ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 377, "name": "модулятор 2", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 378, "name": "тайси тайспи люкс", "priceRetail": 400.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 379, "name": "тайпси айфон люкс", "priceRetail": 400.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 380, "name": "инкакс без вакум", "priceRetail": 130.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 381, "name": "автоголовка usb/type", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 411, "name": "колонка светильник", "priceRetail": 280.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 412, "name": "колонка ", "priceRetail": 280.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 413, "name": "колонка микрофон", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 414, "name": "микрофон колонка 858", "priceRetail": 600.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 415, "name": "держатель к10д", "priceRetail": 220.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 416, "name": "держак 2507", "priceRetail": 220.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 417, "name": "кабель унинверсал", "priceRetail": 70.0, "priceWholesale": 65.0, "wholesaleFrom": 10, "description": "", "image": null },
+        { "id": 418, "name": "головка самсунг", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 419, "name": "головка 45", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 420, "name": "головка 66", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 421, "name": "головка 120", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 422, "name": "головка ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 426, "name": "настольный держак", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null }
+    ]
+};
+
+// ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+let cart = [];
+let currentCategory = null;
+const OWNER_PHONE = '996999959007'; // Замени на свой номер
+
+// ЗАЩИТА ОТ XSS - ЭКРАНИРОВАНИЕ HTML
+function escapeHtml(text) {
+    if (!text) return '';
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return String(text).replace(/[&<>"']/g, m => map[m]);
+}
+
+// САНИТИЗАЦИЯ INPUT - УДАЛЕНИЕ ПОТЕНЦИАЛЬНО ОПАСНОГО КОДА
+function sanitizeInput(input) {
+    if (!input) return '';
+    // Удаляем скрипты, события и опасные теги
+    return escapeHtml(input).trim();
+}
+
+// ИНИЦИАЛИЗАЦИЯ
+function init() {
+    loadCategories();
+    loadCart();
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
+// КАТЕГОРИИ И ТОВАРЫ
+function loadCategories() {
+    const list = document.getElementById('categoriesList');
+    list.innerHTML = '';
+    
+    categories.forEach(cat => {
+        const li = document.createElement('li');
+        li.textContent = cat.name;
+        li.onclick = () => selectCategory(cat.id);
+        list.appendChild(li);
+    });
+
+    const grid = document.getElementById('categoriesGrid');
+    grid.innerHTML = '';
+    
+    categories.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'category-card';
+        div.onclick = () => selectCategory(cat.id);
+        
+        // Ищем первое фото в товарах этой категории
+        let categoryImageHtml = '<div style="font-size:48px;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">📦</div>';
+        const categoryProducts = products[cat.id] || [];
+        if (categoryProducts.length > 0) {
+            const firstWithImage = categoryProducts.find(p => p.image);
+            if (firstWithImage && firstWithImage.image) {
+                const safeName = escapeHtml(cat.name);
+                categoryImageHtml = `<img src="assets/images/${escapeHtml(firstWithImage.image)}" alt="Фото категории" style="width:100%;height:100%;object-fit:cover;">`;
+            }
+        }
+        
+        // Безопасно вставляем название и описание категории
+        const imgDiv = document.createElement('div');
+        imgDiv.className = 'category-image';
+        imgDiv.innerHTML = categoryImageHtml;
+        div.appendChild(imgDiv);
+        
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'category-info';
+        
+        const titleH3 = document.createElement('h3');
+        titleH3.textContent = cat.name;
+        infoDiv.appendChild(titleH3);
+        
+        const descP = document.createElement('p');
+        descP.textContent = cat.description;
+        infoDiv.appendChild(descP);
+        
+        div.appendChild(infoDiv);
+        grid.appendChild(div);
+    });
+}
+
+function selectCategory(categoryId) {
+    currentCategory = categoryId;
+    
+    document.querySelectorAll('.categories-list li').forEach((el, idx) => {
+        el.classList.toggle('active', categories[idx].id === categoryId);
+    });
+
+    loadProducts(categoryId);
+    
+    document.getElementById('homePage').classList.remove('active');
+    document.getElementById('categoryPage').classList.add('active');
+}
+
+function loadProducts(categoryId) {
+    const categoryData = categories.find(c => c.id === categoryId);
+    document.getElementById('categoryTitle').textContent = categoryData.name;
+
+    const grid = document.getElementById('productsGrid');
+    grid.innerHTML = '';
+
+    let categoryProducts = [];
+    if (categoryId === 0) {
+        for (let catId in products) {
+            categoryProducts = categoryProducts.concat(products[catId]);
+        }
+    } else {
+        categoryProducts = products[categoryId] || [];
+    }
+
+    categoryProducts.forEach(product => {
+        const div = document.createElement('div');
+        div.className = 'product-card';
+        
+        const defaultQuantity = 1;
+        const isWholesale = defaultQuantity >= product.wholesaleFrom && product.priceWholesale > 0;
+        const currentPrice = isWholesale ? product.priceWholesale : (product.priceRetail || 0);
+        const showOriginal = isWholesale && product.priceRetail && product.priceRetail !== product.priceWholesale;
+
+        // Получаем картинку товара
+        let imageHtml = '';
+        if (product.image) {
+            const safeName = escapeHtml(product.image);
+            imageHtml = `<img src="assets/images/${safeName}" alt="Фото товара" style="width:100%;height:100%;object-fit:cover;" onerror="this.outerHTML='<div style=\\"font-size:60px;display:flex;align-items:center;justify-content:center;width:100%;height:100%;\\">📦</div>'">`;
+        } else {
+            // Fallback: используем emoji если картинки нет
+            const categoryIcons = {
+                '1': '📦',  // пакеты
+                '2': '✏️',  // концтовар
+                '3': '🎮',  // игрушки
+                '4': '🧹',  // хозтовар
+                '5': '☕',  // продукты
+                '6': '📱'   // электроника
+            };
+            
+            let productCategoryId = '1';
+            for (let catId in products) {
+                if (products[catId].some(p => p.id === product.id)) {
+                    productCategoryId = catId;
+                    break;
+                }
+            }
+            
+            const icon = categoryIcons[productCategoryId] || '📦';
+            imageHtml = `<div style="font-size:60px;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">${icon}</div>`;
+        }
+
+        div.innerHTML = `
+            <div class="product-image">${imageHtml}</div>
+        `;
+
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'product-info';
+        div.appendChild(infoDiv);
+
+        // Название товара
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'product-name';
+        nameDiv.textContent = product.name;
+        infoDiv.appendChild(nameDiv);
+
+        // Описание товара
+        const descDiv = document.createElement('div');
+        descDiv.className = 'product-description';
+        descDiv.textContent = product.description;
+        infoDiv.appendChild(descDiv);
+
+        // Цена
+        const priceDiv = document.createElement('div');
+        priceDiv.className = 'product-price';
+        if (currentPrice > 0) {
+            const priceSpan = document.createElement('span');
+            priceSpan.textContent = currentPrice + ' ₽';
+            priceDiv.appendChild(priceSpan);
+        } else {
+            priceDiv.textContent = 'по запросу';
+        }
+        if (showOriginal && product.priceRetail > 0) {
+            const originalSpan = document.createElement('span');
+            originalSpan.className = 'product-price-original';
+            originalSpan.textContent = product.priceRetail + ' ₽';
+            priceDiv.appendChild(originalSpan);
+        }
+        infoDiv.appendChild(priceDiv);
+
+        // Оптовая цена
+        const wholesaleDiv = document.createElement('div');
+        wholesaleDiv.style.cssText = 'font-size: 12px; color: #b0b0b0; margin-bottom: 10px;';
+        const wholesaleText = `От ${product.wholesaleFrom} шт. опт цена: ${product.priceWholesale && !isNaN(product.priceWholesale) ? product.priceWholesale + ' ₽' : 'по запросу'}`;
+        wholesaleDiv.textContent = wholesaleText;
+        infoDiv.appendChild(wholesaleDiv);
+
+        // Контролы
+        const controlsDiv = document.createElement('div');
+        controlsDiv.className = 'product-controls';
+        controlsDiv.innerHTML = `
+            <input type="number" class="quantity-input" value="1" min="1" max="999" onchange="updatePrice(this, ${product.id})">
+            <button class="add-to-cart-button" onclick="addToCart(${product.id}, this.parentElement.querySelector('.quantity-input').value)">
+                В корзину
+            </button>
+        `;
+        infoDiv.appendChild(controlsDiv);
+        
+        grid.appendChild(div);
+    });
+}
+
+function updatePrice(input, productId) {
+    const quantity = Math.max(1, parseInt(input.value) || 1);
+    input.value = quantity;
+    
+    let product = null;
+    for (let catId in products) {
+        product = products[catId].find(p => p.id === productId);
+        if (product) break;
+    }
+    
+    if (!product) return;
+
+    const isWholesale = quantity >= product.wholesaleFrom && product.priceWholesale > 0;
+    const currentPrice = isWholesale ? product.priceWholesale : (product.priceRetail || 0);
+    
+    const priceDiv = input.closest('.product-controls')?.closest('.product-info')?.querySelector('.product-price');
+    if (!priceDiv) return;
+    
+    // БЕЗОПАСНО: используем textContent вместо innerHTML
+    priceDiv.innerHTML = '';
+    if (isNaN(currentPrice) || currentPrice === 0) {
+        priceDiv.textContent = 'по запросу';
+    } else {
+        priceDiv.appendChild(document.createTextNode(`${currentPrice} ₽`));
+        if (isWholesale && product.priceRetail && !isNaN(product.priceRetail) && product.priceRetail > product.priceWholesale) {
+            const span = document.createElement('span');
+            span.className = 'product-price-original';
+            span.textContent = `${product.priceRetail} ₽`;
+            priceDiv.appendChild(span);
+        }
+    }
+}
+
+function goHome() {
+    currentCategory = null;
+    document.getElementById('categoryPage').classList.remove('active');
+    document.getElementById('homePage').classList.add('active');
+    document.querySelectorAll('.categories-list li').forEach(el => el.classList.remove('active'));
+}
+
+// КОРЗИНА
+function toggleCart() {
+    document.getElementById('cartPanel').classList.toggle('open');
+}
+
+function addToCart(productId, quantity = 1) {
+    quantity = Math.max(1, parseInt(quantity) || 1);
+
+    let product = null;
+    for (let catId in products) {
+        product = products[catId].find(p => p.id === productId);
+        if (product) break;
+    }
+    
+    if (!product) {
+        showNotification('Ошибка при добавлении товара', 'error');
+        return;
+    }
+
+    let cartItem = cart.find(item => item.id === productId);
+
+    if (cartItem) {
+        cartItem.quantity += quantity;
+    } else {
+        cart.push({
+            id: product.id,
+            name: product.name,
+            priceRetail: product.priceRetail,
+            priceWholesale: product.priceWholesale,
+            wholesaleFrom: product.wholesaleFrom,
+            quantity: quantity
+        });
+    }
+
+    saveCart();
+    updateCartUI();
+    showNotification(`✨ ${escapeHtml(product.name)} добавлен в корзину!`, 'success');
+}
+
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    saveCart();
+    updateCartUI();
+}
+
+function updateCartQuantity(productId, newQuantity) {
+    newQuantity = Math.max(1, parseInt(newQuantity) || 1);
+    
+    const cartItem = cart.find(item => item.id === productId);
+    if (cartItem) {
+        cartItem.quantity = newQuantity;
+        saveCart();
+        updateCartUI();
+    }
+}
+
+function updateCartUI() {
+    const cartItemsDiv = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    cartCount.textContent = totalItems;
+
+    if (cart.length === 0) {
+        cartItemsDiv.innerHTML = '<div class="empty-cart">Корзина пуста</div>';
+        cartTotal.textContent = '0 ₽';
+        return;
+    }
+
+    cartItemsDiv.innerHTML = '';
+    let total = 0;
+
+    cart.forEach(item => {
+        const isWholesale = item.quantity >= item.wholesaleFrom;
+        const price = isWholesale ? (item.priceWholesale || 0) : (item.priceRetail || 0);
+        const itemTotal = price * item.quantity;
+        
+        if (price !== 0 && !isNaN(price)) {
+            total += itemTotal;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        
+        // БЕЗОПАСНО: используем textContent для имена товара
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'cart-item-name';
+        nameDiv.textContent = item.name;
+        div.appendChild(nameDiv);
+        
+        const priceDiv = document.createElement('div');
+        priceDiv.className = 'cart-item-price';
+        priceDiv.appendChild(document.createTextNode(`Цена: ${isNaN(price) || price === 0 ? 'по запросу' : price + ' ₽'} `));
+        if (isWholesale) {
+            const optSpan = document.createElement('span');
+            optSpan.style.color = '#27ae60';
+            optSpan.textContent = '(опт)';
+            priceDiv.appendChild(optSpan);
+        } else {
+            priceDiv.appendChild(document.createTextNode('(розница)'));
+        }
+        div.appendChild(priceDiv);
+        
+        const controlsDiv = document.createElement('div');
+        controlsDiv.className = 'cart-item-controls';
+        
+        const minusBtn = document.createElement('button');
+        minusBtn.className = 'quantity-btn';
+        minusBtn.textContent = '−';
+        minusBtn.onclick = () => updateCartQuantity(item.id, item.quantity - 1);
+        controlsDiv.appendChild(minusBtn);
+        
+        const qtyDiv = document.createElement('div');
+        qtyDiv.className = 'cart-item-qty';
+        qtyDiv.textContent = item.quantity;
+        controlsDiv.appendChild(qtyDiv);
+        
+        const plusBtn = document.createElement('button');
+        plusBtn.className = 'quantity-btn';
+        plusBtn.textContent = '+';
+        plusBtn.onclick = () => updateCartQuantity(item.id, item.quantity + 1);
+        controlsDiv.appendChild(plusBtn);
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = 'Удалить';
+        removeBtn.onclick = () => removeFromCart(item.id);
+        controlsDiv.appendChild(removeBtn);
+        
+        div.appendChild(controlsDiv);
+        
+        const totalDiv = document.createElement('div');
+        totalDiv.className = 'cart-item-total';
+        totalDiv.textContent = `Итого: ${isNaN(itemTotal) || itemTotal === 0 ? 'по запросу' : itemTotal + ' ₽'}`;
+        div.appendChild(totalDiv);
+        
+        cartItemsDiv.appendChild(div);
+    });
+
+    cartTotal.textContent = total > 0 ? total + ' ₽' : '0 ₽';
+}
+
+function saveCart() {
+    try {
+        // ЗАЩИТА: проверяем размер данных (макс 5MB для localStorage)
+        const cartData = JSON.stringify(cart);
+        if (cartData.length > 5242880) {
+            console.error('Корзина слишком большая');
+            return;
+        }
+        localStorage.setItem('cart', cartData);
+    } catch (error) {
+        console.error('Ошибка сохранения корзины:', error);
+        // Очищаем если переполнение
+        if (error.name === 'QuotaExceededError') {
+            localStorage.removeItem('cart');
+        }
+    }
+}
+
+function loadCart() {
+    try {
+        const saved = localStorage.getItem('cart');
+        if (saved) {
+            const parsed = JSON.parse(saved);
+            // ЗАЩИТА: проверяем что это массив
+            if (Array.isArray(parsed)) {
+                cart = parsed;
+                updateCartUI();
+            } else {
+                console.warn('Некорректные данные корзины');
+                cart = [];
+            }
+        }
+    } catch (error) {
+        console.error('Ошибка загрузки корзины:', error);
+        // Если данные повреждены - очищаем
+        localStorage.removeItem('cart');
+        cart = [];
+        updateCartUI();
+    }
+}
+
+// ОФОРМЛЕНИЕ ЗАКАЗА
+function formatOrderText(customerData) {
+    // Экранируем все пользовательские данные для безопасности
+    const safeCustomerName = (customerData.name || '').replace(/[_*[\]()~`>#+-=|{}.!]/g, '\\$&');
+    const safePhone = (customerData.phone || '').replace(/[_*[\]()~`>#+-=|{}.!]/g, '\\$&');
+    const safeEmail = (customerData.email || 'не указан').replace(/[_*[\]()~`>#+-=|{}.!]/g, '\\$&');
+    const safeAddress = (customerData.address || 'не указан').replace(/[_*[\]()~`>#+-=|{}.!]/g, '\\$&');
+    
+    let text = '*📋 НОВЫЙ ЗАКАЗ*\n\n';
+    text += `*Клиент:* ${safeCustomerName}\n`;
+    text += `*Телефон:* ${safePhone}\n`;
+    text += `*Email:* ${safeEmail}\n`;
+    text += `*Адрес:* ${safeAddress}\n`;
+    text += `*Время:* ${new Date().toLocaleString('ru-RU')}\n`;
+    text += '\n*Товары:*\n';
+    
+    let totalRetail = 0;
+    let totalWholesale = 0;
+    
+    cart.forEach(item => {
+        const qty = item.quantity || 1;
+        const retailPrice = item.priceRetail || 0;
+        const wholesalePrice = item.priceWholesale || 0;
+        
+        // Экранируем название товара для WhatsApp
+        const safeItemName = (item.name || '').replace(/[_*[\]()~`>#+-=|{}.!]/g, '\\$&');
+        
+        text += `• ${safeItemName}\n`;
+        text += `  Кол-во: ${qty}\n`;
+        
+        if (retailPrice > 0) {
+            text += `  Розница: ${(retailPrice * qty)} ₽\n`;
+            totalRetail += (retailPrice * qty);
+        }
+        if (wholesalePrice > 0) {
+            text += `  Опт: ${(wholesalePrice * qty)} ₽\n`;
+            totalWholesale += (wholesalePrice * qty);
+        }
+        text += '\n';
+    });
+    
+    text += '---\n';
+    if (totalRetail > 0) text += `*Итого розница:* ${totalRetail} ₽\n`;
+    if (totalWholesale > 0) text += `*Итого опт:* ${totalWholesale} ₽\n`;
+    
+    return encodeURIComponent(text);
+}
+
+function sendWhatsAppToOwner(customerData) {
+    const messageText = formatOrderText(customerData);
+    const whatsappURL = `https://wa.me/${OWNER_PHONE}?text=${messageText}`;
+    window.open(whatsappURL, '_blank');
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        showNotification('🛒 Корзина пуста', 'error');
+        return;
+    }
+
+    document.getElementById('homePage').classList.remove('active');
+    document.getElementById('categoryPage').classList.remove('active');
+    document.getElementById('checkoutPage').classList.add('active');
+    toggleCart();
+    
+    updateOrderSummary();
+}
+
+function updateOrderSummary() {
+    const summaryDiv = document.getElementById('orderSummaryItems');
+    const totalDiv = document.getElementById('orderSummaryTotal');
+    
+    summaryDiv.innerHTML = '';
+    let total = 0;
+
+    cart.forEach(item => {
+        const isWholesale = item.quantity >= item.wholesaleFrom;
+        const price = isWholesale ? (item.priceWholesale || 0) : (item.priceRetail || 0);
+        const itemTotal = price * item.quantity;
+        
+        if (price !== 0 && !isNaN(price)) {
+            total += itemTotal;
+        }
+
+        const div = document.createElement('div');
+        div.className = 'summary-item';
+        const priceText = price === 0 || isNaN(price) ? 'по запросу' : itemTotal + ' ₽';
+        
+        // Безопасно создаем элементы без innerHTML
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'summary-item-name';
+        nameSpan.textContent = item.name;
+        div.appendChild(nameSpan);
+
+        const qtySpan = document.createElement('span');
+        qtySpan.className = 'summary-item-qty';
+        qtySpan.textContent = item.quantity + ' шт.';
+        div.appendChild(qtySpan);
+
+        const priceSpan = document.createElement('span');
+        priceSpan.className = 'summary-item-price';
+        priceSpan.textContent = priceText;
+        div.appendChild(priceSpan);
+
+        summaryDiv.appendChild(div);
+    });
+
+    totalDiv.textContent = total > 0 ? total + ' ₽' : 'Нет цен';
+}
+
+function backToCart() {
+    document.getElementById('checkoutPage').classList.remove('active');
+    toggleCart();
+}
+
+function submitOrder(event) {
+    event.preventDefault();
+    
+    // САНИТИЗАЦИЯ ДАННЫХ - удаляем потенциально опасный код
+    const customerData = {
+        name: sanitizeInput(document.getElementById('customerName').value),
+        phone: sanitizeInput(document.getElementById('customerPhone').value),
+        email: sanitizeInput(document.getElementById('customerEmail').value),
+        address: sanitizeInput(document.getElementById('customerAddress').value)
+    };
+    
+    if (!customerData.name || !customerData.phone) {
+        showNotification('⚠️ Заполните обязательные поля', 'error');
+        return;
+    }
+    
+    // ВАЛИДАЦИЯ ИМЕНИ - только буквы, цифры, пробелы, дефисы
+    if (!/^[а-яА-ЯёЁa-zA-Z0-9\s\-]{2,100}$/.test(customerData.name)) {
+        showNotification('⚠️ Имя содержит недопустимые символы', 'error');
+        return;
+    }
+    
+    // ВАЛИДАЦИЯ ТЕЛЕФОНА
+    const phoneDigits = customerData.phone.replace(/\D/g, '');
+    if (!phoneDigits.startsWith('996') && !phoneDigits.startsWith('7')) {
+        showNotification('☎️ Номер должен начинаться с +996 или +7', 'error');
+        return;
+    }
+    
+    // ВАЛИДАЦИЯ EMAIL если заполнен
+    if (customerData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerData.email)) {
+        showNotification('⚠️ Проверьте корректность email', 'error');
+        return;
+    }
+
+    // СОХРАНЕНИЕ ЗАКАЗА
+    try {
+        const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        orders.push({
+            ...customerData,
+            items: JSON.parse(JSON.stringify(cart)),
+            timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('orders', JSON.stringify(orders));
+    } catch (error) {
+        console.error('Ошибка сохранения заказа:', error);
+    }
+
+    // ОТПРАВКА ЧЕК В WHATSAPP
+    try {
+        sendWhatsAppToOwner(customerData);
+    } catch (error) {
+        console.error('Ошибка при отправке в WhatsApp:', error);
+    }
+
+    // ПОКАЗЫВАЕМ СООБЩЕНИЕ УСПЕХА (безопасно - используем textContent)
+    document.getElementById('modalMessage').textContent = `Спасибо, ${customerData.name}! Ваш заказ принят. Чек отправлен в WhatsApp. Мы свяжемся с вами по номеру ${customerData.phone}.`;
+    document.getElementById('successModal').classList.add('active');
+}
+
+function completeOrder() {
+    cart = [];
+    saveCart();
+    updateCartUI();
+    document.getElementById('successModal').classList.remove('active');
+    document.getElementById('checkoutPage').classList.remove('active');
+    document.getElementById('homePage').classList.add('active');
+    document.getElementById('checkoutForm').reset();
+}
+
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    
+    const colors = {
+        success: '#27ae60',
+        error: '#e74c3c',
+        info: '#3498db'
+    };
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background-color: ${colors[type] || colors.success};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        z-index: 2000;
+        animation: slideIn 0.3s ease-out;
+        max-width: 300px;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
+}
+
+// АНИМАЦИИ
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    @keyframes slideOut {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(400px);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
+    </script>
+</body>
+</html>
