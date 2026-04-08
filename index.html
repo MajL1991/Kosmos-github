@@ -303,9 +303,9 @@ body::before {
 }
 
 .product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .product-info {
@@ -768,12 +768,85 @@ body::before {
     }
 
     .sidebar {
-        width: 100%;
+        display: none;
     }
 
     .categories-grid,
     .products-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .category-card {
+        min-height: auto;
+    }
+
+    .category-image {
+        height: 150px;
+    }
+
+    .category-info {
+        padding: 12px;
+    }
+
+    .category-info h3 {
+        font-size: 16px;
+    }
+
+    .category-info p {
+        font-size: 13px;
+    }
+
+    .product-card {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-height: auto;
+    }
+
+    .product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+    }
+
+    .product-info {
+        padding: 12px;
+        flex: 1;
+    }
+
+    .product-name {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .product-description {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+
+    .product-price {
+        font-size: 16px;
+        margin-bottom: 8px;
+    }
+
+    .product-controls {
+        flex-direction: row;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .quantity-input {
+        width: 60px;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .add-to-cart-button {
+        flex: 1;
+        padding: 12px;
+        font-size: 14px;
+        min-height: 44px;
     }
 
     .cart-panel {
@@ -783,68 +856,117 @@ body::before {
 
     .checkout-container {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 
-    button, input, textarea {
-        min-height: 44px;
+    .checkout-form-section,
+    .order-summary {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 12px;
         font-size: 16px;
+        min-height: 44px;
+    }
+
+    .submit-button {
+        padding: 15px;
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .modal-content {
+        padding: 25px;
+        max-width: 90vw;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .modal-content p {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .modal-buttons button {
+        padding: 12px;
+        font-size: 14px;
+        min-height: 44px;
     }
 }
 
 /* Мобильная версия для очень маленьких экранов */
 @media (max-width: 480px) {
-    /* Шапка */
-    .header {
-        padding: 15px 0;
-    }
-
-    .header-content {
-        padding: 0 10px;
-    }
-
-    .logo {
-        font-size: 22px;
-        letter-spacing: 2px;
-    }
-
-    .cart-button {
-        padding: 8px 15px;
+    body {
         font-size: 14px;
     }
 
-    /* Контейнер */
-    .container {
-        max-width: 100%;
-        padding: 10px;
-        margin: 0;
-        display: block !important;
-        gap: 10px;
+    .header {
+        padding: 12px 0;
     }
 
-    /* Боковое меню - скрыть на мобильных */
+    .header-content {
+        padding: 0 15px;
+    }
+
+    .logo {
+        font-size: 20px;
+        letter-spacing: 1px;
+    }
+
+    .cart-button {
+        padding: 10px 16px;
+        font-size: 13px;
+        min-height: 44px;
+    }
+
+    .cart-count {
+        font-size: 12px;
+    }
+
+    .container {
+        max-width: 100%;
+        padding: 15px;
+        margin: 0;
+        display: block !important;
+        gap: 15px;
+    }
+
     .sidebar {
         display: none;
     }
 
-    /* Основной контент */
     .main-content {
         padding: 0;
     }
 
-    /* Сетка категорий */
     .categories-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 12px;
         padding: 0;
         margin: 0;
     }
 
     .category-card {
         min-height: auto;
+        border-radius: 8px;
     }
 
     .category-image {
-        height: 100px;
+        height: 120px;
+        border-radius: 8px 8px 0 0;
     }
 
     .category-info {
@@ -853,206 +975,347 @@ body::before {
 
     .category-info h3 {
         font-size: 14px;
+        margin-bottom: 4px;
     }
 
     .category-info p {
         font-size: 12px;
     }
 
-    /* Сетка товаров */
+    .category-header {
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+        gap: 10px;
+    }
+
+    .back-button {
+        padding: 10px 14px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+
+    .category-header h2 {
+        width: 100%;
+        font-size: 16px;
+        margin-top: 5px;
+    }
+
     .products-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 15px;
     }
 
     .product-card {
-        display: block;
-        gap: 10px;
-        min-height: auto;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(83, 104, 120, 0.15);
     }
 
     .product-image {
         width: 100%;
-        min-width: auto;
-        height: 120px !important;
-        object-fit: contain;
-        background-color: rgba(83, 104, 120, 0.1) !important;
+        height: 180px;
+        border-radius: 0;
     }
 
     .product-image img {
         width: 100%;
         height: 100%;
-        object-fit: contain !important;
+        object-fit: cover;
     }
 
     .product-info {
-        padding: 8px;
-        flex: 1;
-    }
-
-    .product-name {
-        font-size: 13px;
-        margin-bottom: 3px;
-        line-height: 1.2;
-    }
-
-    .product-description {
-        font-size: 11px;
-        margin-bottom: 4px;
-        max-height: 30px;
-        overflow: hidden;
-    }
-
-    .product-price {
-        font-size: 13px;
-        margin-bottom: 4px;
-    }
-
-    /* Скрыть инфо об опте на мобильной */
-    .product-info > div:nth-child(4) {
-        display: none;
-    }
-
-    .product-controls {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    /* Назад кнопка */
-    .category-header {
-        flex-wrap: wrap;
-        margin-bottom: 15px;
-    }
-
-    .back-button {
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-
-    .category-header h2 {
-        width: 100%;
-        font-size: 18px;
-        margin-top: 10px;
-    }
-
-    /* Корзина */
-    .cart-item {
-        padding: 12px;
-        margin-bottom: 8px;
-    }
-
-    .cart-item-name {
-        font-size: 14px;
-        margin-bottom: 4px;
-    }
-
-    .cart-item-price {
-        font-size: 12px;
-        margin-bottom: 6px;
-    }
-
-    .cart-item-controls {
-        gap: 8px;
-        margin-bottom: 6px;
-    }
-
-    .quantity-btn {
-        min-width: 36px;
-        min-height: 36px;
-        font-size: 14px;
-    }
-
-    .cart-item-qty {
-        padding: 4px 8px;
-        min-width: 45px;
-        font-size: 12px;
-    }
-
-    .remove-btn {
-        padding: 4px 8px;
-        font-size: 11px;
-        margin-left: auto;
-    }
-
-    .cart-item-total {
-        font-size: 13px;
-    }
-
-    .empty-cart {
-        padding: 20px 10px;
-        font-size: 16px;
-    }
-
-    /* Оформление заказа */
-    .checkout-header {
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-
-    .checkout-header h2 {
-        font-size: 16px;
-    }
-
-    .checkout-container {
-        gap: 15px;
-    }
-
-    .checkout-form-section,
-    .checkout-cart-section,
-    .order-summary {
         padding: 15px;
     }
 
-    .form-group {
-        margin-bottom: 12px;
-    }
-
-    .form-group label {
-        font-size: 13px;
-    }
-
-    .form-group input,
-    .form-group textarea {
-        padding: 10px;
+    .product-name {
         font-size: 16px;
-        min-height: 44px;
+        margin-bottom: 6px;
+        line-height: 1.3;
     }
 
-    .submit-button {
-        padding: 12px;
-        font-size: 14px;
-        min-height: 44px;
-    }
-
-    .checkout-summary {
-        margin-top: 15px;
-    }
-
-    .summary-item {
+    .product-description {
         font-size: 13px;
-        padding: 8px 0;
+        margin-bottom: 10px;
+        line-height: 1.4;
     }
 
-    /* Модальное окно */
-    .modal-content {
-        padding: 20px;
-        max-width: 85vw;
-    }
-
-    .modal-content h2 {
+    .product-price {
         font-size: 18px;
         margin-bottom: 10px;
     }
 
-    .modal-content p {
+    .product-price-original {
+        font-size: 14px;
+    }
+
+    .product-controls {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+    }
+
+    .quantity-input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        min-height: 44px;
+    }
+
+    .add-to-cart-button {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+        min-height: 48px;
+        border-radius: 8px;
+    }
+
+    .cart-panel {
+        width: 100%;
+        right: -100%;
+        border-radius: 0;
+    }
+
+    .cart-panel-header {
+        padding: 15px 20px;
+    }
+
+    .cart-panel-header h2 {
+        font-size: 18px;
+    }
+
+    .close-cart {
+        font-size: 20px;
+        padding: 5px;
+    }
+
+    .cart-items {
+        padding: 15px;
+    }
+
+    .cart-item {
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+    }
+
+    .cart-item-name {
+        font-size: 16px;
+        margin-bottom: 6px;
+    }
+
+    .cart-item-price {
         font-size: 13px;
         margin-bottom: 8px;
     }
 
+    .cart-item-controls {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .quantity-btn {
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 16px;
+    }
+
+    .cart-item-qty {
+        padding: 6px 12px;
+        min-width: 50px;
+        font-size: 14px;
+    }
+
+    .remove-btn {
+        padding: 6px 12px;
+        font-size: 12px;
+        margin-left: auto;
+    }
+
+    .cart-item-total {
+        font-size: 15px;
+        text-align: right;
+    }
+
+    .empty-cart {
+        padding: 25px 15px;
+        font-size: 16px;
+    }
+
+    .cart-footer {
+        padding: 15px 20px;
+    }
+
+    .cart-total {
+        font-size: 16px;
+        margin-bottom: 12px;
+    }
+
+    .checkout-button {
+        padding: 14px;
+        font-size: 16px;
+        min-height: 48px;
+    }
+
+    .checkout-header {
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .checkout-header h2 {
+        font-size: 18px;
+    }
+
+    .checkout-container {
+        gap: 20px;
+    }
+
+    .checkout-form-section,
+    .order-summary {
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .checkout-form-section h3 {
+        margin-bottom: 15px;
+        font-size: 16px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 14px;
+        font-size: 16px;
+        min-height: 48px;
+        border-radius: 8px;
+    }
+
+    .submit-button {
+        padding: 16px;
+        font-size: 16px;
+        min-height: 50px;
+        border-radius: 8px;
+    }
+
+    .order-summary h3 {
+        margin-bottom: 12px;
+        font-size: 16px;
+    }
+
+    .summary-item {
+        font-size: 14px;
+        padding: 10px 0;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .summary-item-name {
+        flex: 1;
+        min-width: 100px;
+    }
+
+    .summary-item-qty {
+        margin: 0 8px;
+        color: #b0b0b0;
+    }
+
+    .summary-item-price {
+        font-weight: bold;
+        color: #ffffff;
+    }
+
+    .order-total {
+        font-size: 18px;
+        padding-top: 12px;
+    }
+
+    .modal-content {
+        padding: 25px 20px;
+        max-width: 95vw;
+        border-radius: 12px;
+    }
+
+    .modal-content h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .modal-content p {
+        font-size: 14px;
+        margin-bottom: 12px;
+        line-height: 1.5;
+    }
+
+    .modal-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
     .modal-buttons button {
-        padding: 10px;
+        flex: 1;
+        padding: 14px;
+        font-size: 14px;
+        min-height: 48px;
+        border-radius: 8px;
+    }
+}
+
+/* Дополнительные улучшения для планшетов */
+@media (min-width: 481px) and (max-width: 767px) {
+    .categories-grid,
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .product-image {
+        height: 160px;
+    }
+
+    .product-info {
+        padding: 14px;
+    }
+
+    .product-name {
+        font-size: 15px;
+    }
+
+    .product-description {
         font-size: 13px;
-        min-height: 44px;
+    }
+
+    .product-price {
+        font-size: 17px;
+    }
+
+    .add-to-cart-button {
+        padding: 13px;
+        font-size: 15px;
+        min-height: 46px;
+    }
+}
+
+/* Улучшения для больших экранов */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1600px;
+        padding: 30px;
+    }
+
+    .categories-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     }
 }
     </style>
@@ -1222,8 +1485,8 @@ const products = {
         { "id": 43, "name": " Тетрадь 12л Боль линия", "priceRetail": 5.0, "priceWholesale": 4.8, "wholesaleFrom": 100, "description": "", "image": "14727.310.jpg" },
         { "id": 44, "name": "Тетрадь 12л  мал линия", "priceRetail": 5.0, "priceWholesale": 4.8, "wholesaleFrom": 100, "description": "", "image": "14727.310.jpg" },
         { "id": 45, "name": "Тетрадь 24л ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 46, "name": "Тетрадь 36л ", "priceRetail": 20.0, "priceWholesale": 18.0, "wholesaleFrom": 2, "description": "", "image": null },
-        { "id": 47, "name": "Тетрадь 48л", "priceRetail": 25.0, "priceWholesale": 23.0, "wholesaleFrom": 2, "description": "", "image": null },
+        { "id": 46, "name": "Тетрадь 36л ", "priceRetail": 20.0, "priceWholesale": 18.0, "wholesaleFrom": 2, "description": "", "image": "photo_2026-04-08_14-22-35.jpg" },
+        { "id": 47, "name": "Тетрадь 48л", "priceRetail": 25.0, "priceWholesale": 23.0, "wholesaleFrom": 2, "description": "", "image": "photo_2026-04-08_14-22-38.jpg" },
         { "id": 48, "name": "Тетрадь 96л", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "RQIS3534.PNG" },
         { "id": 49, "name": "А4 лист ", "priceRetail": 340.0, "priceWholesale": 320.0, "wholesaleFrom": 5, "description": "", "image": "Илим-Стандарт1.jpg" },
         { "id": 50, "name": "КММ", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
@@ -1235,7 +1498,7 @@ const products = {
         { "id": 56, "name": "Ценник ", "priceRetail": 100.0, "priceWholesale": 90.0, "wholesaleFrom": 12, "description": "", "image": "images (8).jpg" },
         { "id": 57, "name": "Расскраска", "priceRetail": 25.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 58, "name": "Расскраска+наклейка", "priceRetail": 60.0, "priceWholesale": 55.0, "wholesaleFrom": 10, "description": "", "image": null },
-        { "id": 60, "name": "Блокнот с ключом", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 60, "name": "Блокнот с ключом", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-19-01.jpg" },
         { "id": 61, "name": "Блокнот детский", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 62, "name": "Блокнот А5", "priceRetail": 130.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 63, "name": "Блокнот ", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
@@ -1244,16 +1507,16 @@ const products = {
         { "id": 66, "name": "Цветная Бумага", "priceRetail": 20.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "LORJ3799.PNG" },
         { "id": 67, "name": "файл", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "VWDI5679.PNG" },
         { "id": 68, "name": "обложка", "priceRetail": 130.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 69, "name": "Альбом мал", "priceRetail": 30.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 70, "name": "Альбом бол 16", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 71, "name": "кисточка", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 69, "name": "Альбом мал", "priceRetail": 30.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "BLIK8642.PNG" },
+        { "id": 70, "name": "Альбом бол 16", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-23-57.jpg" },
+        { "id": 71, "name": "кисточка", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "GBWX9131.PNG" },
         { "id": 72, "name": "краска ", "priceRetail": 40.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 73, "name": "краска ориг", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 74, "name": "Линейка 15см", "priceRetail": 15.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "middlesize.jpg" },
         { "id": 75, "name": "линейка 20см", "priceRetail": 20.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "0084o-linejka-20sm-3.jpg" },
         { "id": 76, "name": "циркуль", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 77, "name": "Конверт бол", "priceRetail": 120.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 78, "name": "Конверт мал", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 78, "name": "Конверт мал", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-19-05.jpg" },
         { "id": 143, "name": "калькулятор большой", "priceRetail": 350.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 144, "name": "калькулятор ", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 274, "name": "наклейка ", "priceRetail": 40.0, "priceWholesale": 35.0, "wholesaleFrom": 10, "description": "", "image": null },
@@ -1264,19 +1527,19 @@ const products = {
         { "id": 80, "name": "Ширибом золотой", "priceRetail": 80.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "LZJE2037.PNG" },
         { "id": 81, "name": "Ширибом китай", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "DJUK9083.PNG" },
         { "id": 82, "name": "Ширибом узб", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 83, "name": "Ширибом круг", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 84, "name": "Пузырь", "priceRetail": 430.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 83, "name": "Ширибом круг", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-23-03.jpg" },
+        { "id": 84, "name": "Пузырь", "priceRetail": 430.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-23-09.jpg" },
         { "id": 85, "name": "Пузырь бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 86, "name": "лизун мал", "priceRetail": 430.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 87, "name": "лизун бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 88, "name": "Слайм", "priceRetail": 50.0, "priceWholesale": 40.0, "wholesaleFrom": 10, "description": "", "image": "images (9).jpg" },
         { "id": 89, "name": "Чи топ", "priceRetail": 840.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 90, "name": "Читоп бол", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 91, "name": "топ космический", "priceRetail": 400.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 92, "name": "Пистолет порох", "priceRetail": 380.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 91, "name": "топ космический", "priceRetail": 400.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-44-43.jpg" },
+        { "id": 92, "name": "Пистолет порох", "priceRetail": 380.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-45-02.jpg" },
         { "id": 93, "name": "пистолет шар", "priceRetail": 65.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "FSEO8684.PNG" },
         { "id": 94, "name": "дробовик", "priceRetail": 65.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "WNVS5031.PNG" },
-        { "id": 95, "name": "Писолет желтый", "priceRetail": 60.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 95, "name": "Писолет желтый", "priceRetail": 60.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-44-47.jpg" },
         { "id": 96, "name": "Писолет лазер", "priceRetail": 70.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "AWPE4420.PNG" },
         { "id": 97, "name": "пистолет 103", "priceRetail": 30.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "VWMG9297.PNG" },
         { "id": 98, "name": "пистолет орбис", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
@@ -1339,8 +1602,8 @@ const products = {
         { "id": 162, "name": "лего конструктор 111шт", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 163, "name": "конструктор боль", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 164, "name": "бовлинг ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 165, "name": "мошина 999", "priceRetail": 150.0, "priceWholesale": 140.0, "wholesaleFrom": 10, "description": "", "image": null },
-        { "id": 196, "name": "лазер  ", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 165, "name": "мошина 999", "priceRetail": 150.0, "priceWholesale": 140.0, "wholesaleFrom": 10, "description": "", "image": "photo_2026-04-08_14-44-52.jpg" },
+        { "id": 196, "name": "лазер  ", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-23-01.jpg" },
         { "id": 197, "name": "доска цепочка ", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "WIVL6377.PNG" },
         { "id": 198, "name": "доска заколка ", "priceRetail": 180.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 199, "name": "доска липучка ", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "BHBW9223.PNG" },
@@ -1348,7 +1611,7 @@ const products = {
         { "id": 201, "name": "доска орбиз", "priceRetail": 300.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "CSPX2369.PNG" },
         { "id": 202, "name": "доска резинка ", "priceRetail": 160.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "IAQE6370.PNG" },
         { "id": 203, "name": "доска нож", "priceRetail": 280.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "ROXV6426.PNG" },
-        { "id": 204, "name": "доска  черн нож", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 204, "name": "доска  черн нож", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-45-04.jpg" },
         { "id": 205, "name": "доска змея ", "priceRetail": 320.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 206, "name": "доска спинер", "priceRetail": 480.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "TFPJ3765.PNG" },
         { "id": 207, "name": "доска магнит", "priceRetail": 250.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
@@ -1377,14 +1640,14 @@ const products = {
         { "id": 160, "name": "хна роял черный", "priceRetail": 130.0, "priceWholesale": 120.0, "wholesaleFrom": 12, "description": "", "image": "Без названия (4).jpg" },
         { "id": 161, "name": "хна монстр", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 166, "name": "неведимка больш", "priceRetail": 25.0, "priceWholesale": 20.0, "wholesaleFrom": 20, "description": "", "image": null },
-        { "id": 167, "name": "неведимка мал", "priceRetail": 15.0, "priceWholesale": 12.0, "wholesaleFrom": 20, "description": "", "image": null },
+        { "id": 167, "name": "неведимка мал", "priceRetail": 15.0, "priceWholesale": 12.0, "wholesaleFrom": 20, "description": "", "image": "photo_2026-04-08_14-22-12.jpg" },
         { "id": 168, "name": "резинка баклажка ", "priceRetail": 50.0, "priceWholesale": 45.0, "wholesaleFrom": 12, "description": "", "image": null },
         { "id": 169, "name": "резинка черн", "priceRetail": 150.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 170, "name": "булавка ", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 171, "name": "булавка иголка ", "priceRetail": 200.0, "priceWholesale": 180.0, "wholesaleFrom": 5, "description": "", "image": null },
-        { "id": 172, "name": "булавка брошка ", "priceRetail": 120.0, "priceWholesale": 100.0, "wholesaleFrom": 5, "description": "", "image": null },
-        { "id": 173, "name": "булавка дорог", "priceRetail": 150.0, "priceWholesale": 135.0, "wholesaleFrom": 5, "description": "", "image": null },
-        { "id": 174, "name": "булавка круг", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 172, "name": "булавка брошка ", "priceRetail": 120.0, "priceWholesale": 100.0, "wholesaleFrom": 5, "description": "", "image": "photo_2026-04-08_14-22-31.jpg" },
+        { "id": 173, "name": "булавка дорог", "priceRetail": 150.0, "priceWholesale": 135.0, "wholesaleFrom": 5, "description": "", "image": "photo_2026-04-08_14-22-44.jpg" },
+        { "id": 174, "name": "булавка круг", "priceRetail": 100.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-22-19.jpg" },
         { "id": 175, "name": "иголка ", "priceRetail": 10.0, "priceWholesale": 8.0, "wholesaleFrom": 20, "description": "", "image": null },
         { "id": 176, "name": "резинка пачка ", "priceRetail": 350.0, "priceWholesale": 330.0, "wholesaleFrom": 5, "description": "", "image": null },
         { "id": 177, "name": "перчатка одн l", "priceRetail": 180.0, "priceWholesale": 175.0, "wholesaleFrom": 4, "description": "", "image": null },
@@ -1398,7 +1661,7 @@ const products = {
         { "id": 185, "name": "мачалка варежка ", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 186, "name": "мачалка корейский ", "priceRetail": 0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 187, "name": "губка пчелка ", "priceRetail": 50.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
-        { "id": 188, "name": "губка бест", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
+        { "id": 188, "name": "губка бест", "priceRetail": 35.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": "photo_2026-04-08_14-23-51.jpg" },
         { "id": 189, "name": "губка некст", "priceRetail": 45.0, "priceWholesale": 0, "wholesaleFrom": 1, "description": "", "image": null },
         { "id": 190, "name": "тряка 3в1 ", "priceRetail": 280.0, "priceWholesale": 250.0, "wholesaleFrom": 20, "description": "", "image": null },
         { "id": 191, "name": "тряпка 3в1 ориг", "priceRetail": 480.0, "priceWholesale": 450.0, "wholesaleFrom": 20, "description": "", "image": "LXBO8321.PNG" },
@@ -1632,7 +1895,7 @@ const products = {
 // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
 let cart = [];
 let currentCategory = null;
-const OWNER_PHONE = '996999959007'; // Замени на свой номер
+const OWNER_PHONE = '996999939007'; // Замени на свой номер
 
 // ЗАЩИТА ОТ XSS - ЭКРАНИРОВАНИЕ HTML
 function escapeHtml(text) {
@@ -1693,7 +1956,7 @@ function loadCategories() {
             const firstWithImage = categoryProducts.find(p => p.image);
             if (firstWithImage && firstWithImage.image) {
                 const safeName = escapeHtml(cat.name);
-                categoryImageHtml = `<img src="assets/images/${escapeHtml(firstWithImage.image)}" alt="Фото категории" style="width:100%;height:100%;object-fit:cover;">`;
+                categoryImageHtml = `<img src="assets/images/${escapeHtml(firstWithImage.image)}" alt="Фото категории" style="max-width:100%;max-height:100%;object-fit:contain;">`;
             }
         }
         
@@ -1748,41 +2011,29 @@ function loadProducts(categoryId) {
         categoryProducts = products[categoryId] || [];
     }
 
+    categoryProducts = categoryProducts.filter(product => {
+        const hasPhoto = product.image && String(product.image).trim() !== '';
+        const hasRetailPrice = product.priceRetail && product.priceRetail > 0;
+        return hasPhoto && hasRetailPrice;
+    });
+
+    const fragment = document.createDocumentFragment();
+
     categoryProducts.forEach(product => {
         const div = document.createElement('div');
         div.className = 'product-card';
         
         const defaultQuantity = 1;
+        const hasRetailPrice = product.priceRetail > 0;
         const isWholesale = defaultQuantity >= product.wholesaleFrom && product.priceWholesale > 0;
-        const currentPrice = isWholesale ? product.priceWholesale : (product.priceRetail || 0);
-        const showOriginal = isWholesale && product.priceRetail && product.priceRetail !== product.priceWholesale;
+        const currentPrice = isWholesale ? product.priceWholesale : (hasRetailPrice ? product.priceRetail : 0);
+        const showOriginal = isWholesale && hasRetailPrice && product.priceRetail !== product.priceWholesale;
 
         // Получаем картинку товара
         let imageHtml = '';
         if (product.image) {
             const safeName = escapeHtml(product.image);
-            imageHtml = `<img src="assets/images/${safeName}" alt="Фото товара" style="width:100%;height:100%;object-fit:cover;" onerror="this.outerHTML='<div style=\\"font-size:60px;display:flex;align-items:center;justify-content:center;width:100%;height:100%;\\">📦</div>'">`;
-        } else {
-            // Fallback: используем emoji если картинки нет
-            const categoryIcons = {
-                '1': '📦',  // пакеты
-                '2': '✏️',  // концтовар
-                '3': '🎮',  // игрушки
-                '4': '🧹',  // хозтовар
-                '5': '☕',  // продукты
-                '6': '📱'   // электроника
-            };
-            
-            let productCategoryId = '1';
-            for (let catId in products) {
-                if (products[catId].some(p => p.id === product.id)) {
-                    productCategoryId = catId;
-                    break;
-                }
-            }
-            
-            const icon = categoryIcons[productCategoryId] || '📦';
-            imageHtml = `<div style="font-size:60px;display:flex;align-items:center;justify-content:center;width:100%;height:100%;">${icon}</div>`;
+            imageHtml = `<img src="assets/images/${safeName}" alt="Фото товара" style="max-width:100%;max-height:100%;object-fit:contain;" onerror="this.closest('.product-card')?.remove();">`;
         }
 
         div.innerHTML = `
@@ -1835,14 +2086,16 @@ function loadProducts(categoryId) {
         controlsDiv.className = 'product-controls';
         controlsDiv.innerHTML = `
             <input type="number" class="quantity-input" value="1" min="1" max="999" onchange="updatePrice(this, ${product.id})">
-            <button class="add-to-cart-button" onclick="addToCart(${product.id}, this.parentElement.querySelector('.quantity-input').value)">
+            <button class="add-to-cart-button" onclick="addToCart(${product.id}, this.parentElement.querySelector('.quantity-input').value, this)">
                 В корзину
             </button>
         `;
         infoDiv.appendChild(controlsDiv);
         
-        grid.appendChild(div);
+        fragment.appendChild(div);
     });
+
+    grid.appendChild(fragment);
 }
 
 function updatePrice(input, productId) {
@@ -1890,8 +2143,14 @@ function toggleCart() {
     document.getElementById('cartPanel').classList.toggle('open');
 }
 
-function addToCart(productId, quantity = 1) {
+function addToCart(productId, quantity = 1, button = null) {
     quantity = Math.max(1, parseInt(quantity) || 1);
+
+    if (button) {
+        button.disabled = true;
+        button.textContent = '⏳';
+        button.classList.add('loading');
+    }
 
     let product = null;
     for (let catId in products) {
@@ -1900,6 +2159,11 @@ function addToCart(productId, quantity = 1) {
     }
     
     if (!product) {
+        if (button) {
+            button.disabled = false;
+            button.textContent = 'В корзину';
+            button.classList.remove('loading');
+        }
         showNotification('Ошибка при добавлении товара', 'error');
         return;
     }
@@ -1922,6 +2186,14 @@ function addToCart(productId, quantity = 1) {
     saveCart();
     updateCartUI();
     showNotification(`✨ ${escapeHtml(product.name)} добавлен в корзину!`, 'success');
+
+    if (button) {
+        setTimeout(() => {
+            button.disabled = false;
+            button.textContent = 'В корзину';
+            button.classList.remove('loading');
+        }, 500);
+    }
 }
 
 function removeFromCart(productId) {
@@ -1959,11 +2231,11 @@ function updateCartUI() {
     let total = 0;
 
     cart.forEach(item => {
-        const isWholesale = item.quantity >= item.wholesaleFrom;
-        const price = isWholesale ? (item.priceWholesale || 0) : (item.priceRetail || 0);
+        const isWholesale = item.quantity >= item.wholesaleFrom && item.priceWholesale > 0;
+        const price = isWholesale ? item.priceWholesale : item.priceRetail;
         const itemTotal = price * item.quantity;
         
-        if (price !== 0 && !isNaN(price)) {
+        if (price > 0 && !isNaN(price)) {
             total += itemTotal;
         }
 
@@ -2145,11 +2417,11 @@ function updateOrderSummary() {
     let total = 0;
 
     cart.forEach(item => {
-        const isWholesale = item.quantity >= item.wholesaleFrom;
-        const price = isWholesale ? (item.priceWholesale || 0) : (item.priceRetail || 0);
+        const isWholesale = item.quantity >= item.wholesaleFrom && item.priceWholesale > 0;
+        const price = isWholesale ? item.priceWholesale : item.priceRetail;
         const itemTotal = price * item.quantity;
         
-        if (price !== 0 && !isNaN(price)) {
+        if (price > 0 && !isNaN(price)) {
             total += itemTotal;
         }
 

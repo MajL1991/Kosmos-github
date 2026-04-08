@@ -4,8 +4,7 @@ const urlsToCache = [
     '/',
     '/index.html',
     '/styles.css',
-    '/script.js',
-    '/data.js'
+    '/sw.js'
 ];
 
 // Установка SW и кеширование файлов
