@@ -383,35 +383,6 @@ body::after {
 /* ================================================
    QR-КНОПКА И МОДАЛ
    ================================================ */
-.qr-float-btn {
-    position: fixed;
-    bottom: 86px;
-    right: 28px;
-    width: 46px;
-    height: 46px;
-    border-radius: var(--r-full);
-    background: var(--c-surface-2);
-    border: 1px solid var(--c-border);
-    color: var(--c-text-2);
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 900;
-    box-shadow: var(--shadow-card);
-    transition: background var(--t-base), border-color var(--t-base), box-shadow var(--t-base), transform var(--t-fast);
-    line-height: 1;
-}
-
-.qr-float-btn:hover {
-    background: var(--c-accent-soft);
-    border-color: var(--c-accent);
-    color: var(--c-text-1);
-    box-shadow: 0 0 20px var(--c-accent-glow);
-    transform: translateY(-3px);
-}
-
 .qr-modal {
     display: none;
     position: fixed;
@@ -1786,7 +1757,7 @@ body::after {
     <!-- Шапка -->
     <header class="header">
         <div class="header-content">
-            <h1 class="logo" onclick="goHome()" style="cursor:pointer">kosmos</h1>
+            <h1 class="logo" onclick="goHome()" ondblclick="openQrModal()" style="cursor:pointer" title="">kosmos</h1>
             <div class="search-wrap">
                 <input class="search-input" id="searchInput" type="text" placeholder="🔍 Поиск товаров..." autocomplete="off" oninput="handleSearch(this.value)" onfocus="handleSearch(this.value)">
                 <button class="search-clear" id="searchClear" onclick="clearSearch()">×</button>
@@ -1891,9 +1862,6 @@ body::after {
 
     <!-- Кнопка Наверх -->
     <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Наверх">↑</button>
-
-    <!-- QR-кнопка -->
-    <button class="qr-float-btn" onclick="openQrModal()" title="QR-код сайта">&#9639;</button>
 
     <!-- QR-модал -->
     <div class="qr-modal" id="qrModal" onclick="closeQrModal(event)">
