@@ -149,7 +149,7 @@ git push -u origin main
 - ✅ Конфликты переменных в formatOrderText
 - ✅ Небезопасные обработчики событий
 
-Полный отчет: [BUG_FIX_FINAL_REPORT.md](BUG_FIX_FINAL_REPORT.md)
+Отчет по исправлениям включен в историю изменений репозитория.
 
 ## 📄 Лицензия
 

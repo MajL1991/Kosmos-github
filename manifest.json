@@ -1,0 +1,24 @@
+{
+  "name": "KOSMOS — Магазин",
+  "short_name": "KOSMOS",
+  "description": "Магазин товаров оптом и в розницу",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#080c10",
+  "theme_color": "#5b8fa8",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
