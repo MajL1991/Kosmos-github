@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- БЕЗОПАСНОСТЬ: Content Security Policy -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.qrserver.com;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.qrserver.com https://chart.googleapis.com;">
     <!-- ЗАЩИТА ОТ КЛИКДЖЕКИНГА -->
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     <!-- ОТКЛЮЧЕНИЕ MIME SNIFFING -->
@@ -3314,9 +3314,20 @@ function showNotification(message, type = 'success') {
 
 // QR-КОД
 function openQrModal() {
-    const url = window.location.href.split('?')[0].split('#')[0];
+    // Если сайт открыт локально — используем реальный URL GitHub Pages
+    let url = window.location.href.split('?')[0].split('#')[0];
+    if (url.startsWith('file://') || url.includes('localhost')) {
+        url = 'https://majl1991.github.io/Kosmos-github/';
+    }
     const qrApi = `https://api.qrserver.com/v1/create-qr-code/?size=360x360&margin=2&data=${encodeURIComponent(url)}`;
-    document.getElementById('qrImage').src = qrApi;
+    const img = document.getElementById('qrImage');
+    img.src = '';
+    img.onerror = () => {
+        // Fallback: Google Charts API
+        img.onerror = null;
+        img.src = `https://chart.googleapis.com/chart?chs=360x360&cht=qr&chl=${encodeURIComponent(url)}`;
+    };
+    img.src = qrApi;
     document.getElementById('qrUrl').textContent = url;
     document.getElementById('qrModal').classList.add('active');
     document.body.style.overflow = 'hidden';
