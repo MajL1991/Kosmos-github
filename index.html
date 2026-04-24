@@ -2379,6 +2379,71 @@ const products = {
     ]
 };
 
+// СИНХРОНИЗАЦИЯ С EXCEL: товары, удалённые из таблицы 123.xlsx
+// Если в Excel снова менялся список, обнови этот массив ID.
+const EXCEL_REMOVED_PRODUCT_IDS = new Set([
+    26, 30, 35, 45, 72, 73, 77, 82, 85, 86, 87, 89, 90, 97, 98, 100, 116,
+    123, 125, 126, 127, 128, 137, 140, 149, 154, 155, 157, 162, 163, 164,
+    183, 205, 217, 219, 221, 223, 225, 227, 230, 231, 232, 233, 234, 235,
+    236, 237, 248, 253, 254, 255, 256, 261, 271, 280, 283, 295, 305, 373,
+    374, 376, 382, 383, 384, 410, 418, 419, 420, 421, 422, 424, 432, 435,
+    436, 439, 440, 441
+]);
+
+function syncProductsWithExcel() {
+    Object.keys(products).forEach(catId => {
+        products[catId] = (products[catId] || []).filter(product => !EXCEL_REMOVED_PRODUCT_IDS.has(Number(product.id)));
+    });
+}
+
+function findProductById(productId) {
+    const targetId = Number(productId);
+    for (let catId in products) {
+        const found = (products[catId] || []).find(p => Number(p.id) === targetId);
+        if (found) return found;
+    }
+    return null;
+}
+
+function sanitizeFavoritesData(items) {
+    if (!Array.isArray(items)) return [];
+    const uniqueIds = new Set();
+
+    items.forEach(id => {
+        const numericId = Number(id);
+        if (!Number.isFinite(numericId)) return;
+        if (!findProductById(numericId)) return;
+        uniqueIds.add(numericId);
+    });
+
+    return Array.from(uniqueIds);
+}
+
+function sanitizeCartData(items) {
+    if (!Array.isArray(items)) return [];
+
+    return items
+        .map(item => {
+            if (!item) return null;
+
+            const productId = Number(item.id);
+            const product = findProductById(productId);
+            if (!product) return null;
+
+            const quantity = Math.max(1, parseInt(item.quantity, 10) || 1);
+
+            return {
+                id: Number(product.id),
+                name: product.name,
+                priceRetail: Number(product.priceRetail) || 0,
+                priceWholesale: Number(product.priceWholesale) || 0,
+                wholesaleFrom: Number(product.wholesaleFrom) || 1,
+                quantity
+            };
+        })
+        .filter(Boolean);
+}
+
 // ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
 let cart = [];
 let favorites = [];
@@ -2407,6 +2472,7 @@ function sanitizeInput(input) {
 
 // ИНИЦИАЛИЗАЦИЯ
 function init() {
+    syncProductsWithExcel();
     loadCategories();
     loadCart();
     loadFavorites();
@@ -2729,7 +2795,8 @@ function loadFavorites() {
         const saved = localStorage.getItem('favorites');
         if (saved) {
             const parsed = JSON.parse(saved);
-            if (Array.isArray(parsed)) favorites = parsed;
+            favorites = sanitizeFavoritesData(parsed);
+            saveFavorites();
         }
     } catch (e) {
         favorites = [];
@@ -3066,14 +3133,18 @@ function loadCart() {
         const saved = localStorage.getItem('cart');
         if (saved) {
             const parsed = JSON.parse(saved);
-            // ЗАЩИТА: проверяем что это массив
+            // ЗАЩИТА: проверяем и очищаем невалидные/устаревшие позиции
             if (Array.isArray(parsed)) {
-                cart = parsed;
+                cart = sanitizeCartData(parsed);
+                saveCart();
                 updateCartUI();
             } else {
                 console.warn('Некорректные данные корзины');
                 cart = [];
             }
+        } else {
+            cart = [];
+            updateCartUI();
         }
     } catch (error) {
         console.error('Ошибка загрузки корзины:', error);

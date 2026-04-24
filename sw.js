@@ -1,10 +1,11 @@
 // Service Worker для кеширования и оффлайн функциональности
-const CACHE_NAME = 'kosmos-shop-v2';
+const CACHE_NAME = 'kosmos-shop-v3';
 const urlsToCache = [
-    '/',
-    '/index.html',
-    '/styles.css',
-    '/sw.js'
+    './',
+    './index.html',
+    './manifest.json',
+    './styles.css',
+    './sw.js'
 ];
 
 // Установка SW и кеширование файлов
@@ -39,6 +40,12 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
     // Пропускаем запросы не-GET
     if (event.request.method !== 'GET') return;
+
+    const requestUrl = new URL(event.request.url);
+    // Не кэшируем сторонние запросы
+    if (requestUrl.origin !== self.location.origin) {
+        return;
+    }
     
     event.respondWith(
         fetch(event.request)
@@ -54,7 +61,14 @@ self.addEventListener('fetch', event => {
             })
             .catch(() => {
                 // Если сеть не доступна, используем кеш
-                return caches.match(event.request);
+                return caches.match(event.request).then(cached => {
+                    if (cached) return cached;
+                    // Для переходов по страницам отдаем главный экран
+                    if (event.request.mode === 'navigate') {
+                        return caches.match('./index.html');
+                    }
+                    return null;
+                });
             })
     );
 });
