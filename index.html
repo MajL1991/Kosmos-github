@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -1659,7 +1659,7 @@ body::after {
 /* Планшет вертикальный */
 @media (min-width: 481px) and (max-width: 767px) {
     .categories-grid,
-    .products-grid { grid-template-columns: repeat(3, 1fr); }
+    .products-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* Телефон */
@@ -1705,25 +1705,56 @@ body::after {
     .category-image { height: 120px; }
 
     .products-grid {
-        grid-template-columns: 1fr;
-        gap: 14px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .product-card {
+        min-width: 0;
+    }
+
+    .product-image {
+        height: 120px;
+    }
+
+    .product-info {
+        padding: 10px;
+    }
+
+    .product-name {
+        font-size: 13px;
+        line-height: 1.25;
+        margin-bottom: 4px;
+    }
+
+    .product-description {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+
+    .product-price {
+        font-size: 16px;
+        margin-bottom: 6px;
     }
 
     .product-controls {
         flex-direction: column;
         align-items: stretch;
+        gap: 8px;
+        padding-top: 8px;
     }
 
     .quantity-input {
         width: 100%;
         text-align: center;
-        min-height: 46px;
-        font-size: 16px;
+        min-height: 40px;
+        font-size: 14px;
     }
 
     .add-to-cart-button {
-        min-height: 48px;
-        font-size: 15px;
+        min-height: 40px;
+        font-size: 13px;
+        padding: 8px 10px;
     }
 
     .form-group input,
@@ -2721,7 +2752,7 @@ function loadProducts(categoryId) {
         const controlsDiv = document.createElement('div');
         controlsDiv.className = 'product-controls';
         controlsDiv.innerHTML = `
-            <input type="number" class="quantity-input" value="1" min="1" max="999" oninput="updatePrice(this, ${product.id})" onchange="updatePrice(this, ${product.id})">
+            <input type="number" class="quantity-input" value="1" min="1" max="999" inputmode="numeric" oninput="updatePrice(this, ${product.id}, false)" onchange="updatePrice(this, ${product.id}, true)">
             <button class="add-to-cart-button" onclick="addToCart(${product.id}, this.parentElement.querySelector('.quantity-input').value, this)">
                 В корзину
             </button>
@@ -2734,9 +2765,15 @@ function loadProducts(categoryId) {
     grid.appendChild(fragment);
 }
 
-function updatePrice(input, productId) {
-    const quantity = Math.max(1, parseInt(input.value) || 1);
-    input.value = quantity;
+function updatePrice(input, productId, normalizeInput = false) {
+    const parsedQuantity = parseInt(input.value, 10);
+    const quantity = Math.min(999, Math.max(1, parsedQuantity || 1));
+
+    // Во время ввода не перезаписываем поле, чтобы можно было стереть "1" и ввести новое значение.
+    // Нормализуем только по change (когда пользователь завершил ввод).
+    if (normalizeInput) {
+        input.value = quantity;
+    }
     
     let product = null;
     for (let catId in products) {
